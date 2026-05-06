@@ -31,8 +31,8 @@ export function Header() {
                 href={item.href}
                 className={`focus-ring rounded-full px-5 py-2.5 text-sm font-bold transition ${
                   isActive
-                    ? "bg-[#123047] text-white shadow-[0_10px_25px_rgba(18,48,71,0.18)]"
-                    : "text-[#123047] hover:bg-white hover:text-[#267FC0]"
+                    ? "bg-[#123047] !text-white shadow-[0_10px_25px_rgba(18,48,71,0.18)]"
+                    : "text-[#123047] hover:bg-[#123047] hover:!text-white hover:shadow-[0_10px_25px_rgba(18,48,71,0.18)]"
                 }`}
               >
                 {item.label}
@@ -71,7 +71,9 @@ export function Header() {
                   href={item.href}
                   onClick={() => setIsOpen(false)}
                   className={`focus-ring rounded-2xl px-4 py-3 text-sm font-bold transition ${
-                    isActive ? "bg-[#E5F5FF] text-[#123047]" : "text-[#31536B] hover:bg-[#F5FBFF]"
+                    isActive
+                      ? "bg-[#123047] !text-white"
+                      : "text-[#31536B] hover:bg-[#123047] hover:!text-white"
                   }`}
                 >
                   {item.label}

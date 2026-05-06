@@ -1,0 +1,116 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-baby-blue: #a7d8ff;
+  --color-accent-blue: #5badeb;
+  --color-deep-navy: #123047;
+  --color-soft-bg: #f5fbff;
+  --color-card-white: #ffffff;
+  --color-mint-soft: #d8f7ed;
+  --color-sun-soft: #fff1c7;
+  --color-coral-soft: #ffd9d2;
+  --font-sans: "Inter", "Segoe UI", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Cascadia Code", "SFMono-Regular", Consolas, ui-monospace, monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  background: #f5fbff;
+  color: #123047;
+  font-family: "Inter", "Segoe UI", ui-sans-serif, system-ui, sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+::selection {
+  background: #a7d8ff;
+  color: #123047;
+}
+
+.page-shell {
+  position: relative;
+  overflow: hidden;
+}
+
+.page-shell::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background:
+    linear-gradient(135deg, rgba(167, 216, 255, 0.16) 0 25%, transparent 25% 100%),
+    linear-gradient(225deg, rgba(216, 247, 237, 0.2) 0 18%, transparent 18% 100%),
+    #f5fbff;
+}
+
+.page-shell::after {
+  content: "";
+  position: fixed;
+  inset: auto -8% 0 -8%;
+  z-index: -1;
+  height: 28vh;
+  background:
+    linear-gradient(180deg, rgba(245, 251, 255, 0) 0%, rgba(167, 216, 255, 0.28) 100%),
+    repeating-linear-gradient(135deg, rgba(91, 173, 235, 0.12) 0 2px, transparent 2px 18px);
+  clip-path: polygon(0 38%, 12% 48%, 24% 34%, 38% 50%, 52% 35%, 66% 46%, 82% 30%, 100% 42%, 100% 100%, 0 100%);
+  pointer-events: none;
+}
+
+.soft-grid {
+  background-image:
+    linear-gradient(rgba(18, 48, 71, 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(18, 48, 71, 0.055) 1px, transparent 1px);
+  background-size: 34px 34px;
+}
+
+.wave-accent {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 52px;
+  background: linear-gradient(90deg, rgba(167, 216, 255, 0.5), rgba(216, 247, 237, 0.55), rgba(255, 241, 199, 0.5));
+  background-size: 180% 100%;
+  clip-path: polygon(0 42%, 14% 57%, 27% 39%, 42% 55%, 58% 36%, 72% 51%, 86% 35%, 100% 49%, 100% 100%, 0 100%);
+  animation: waveShift 12s ease-in-out infinite alternate;
+}
+
+.focus-ring {
+  outline: none;
+}
+
+.focus-ring:focus-visible {
+  box-shadow: 0 0 0 4px rgba(91, 173, 235, 0.28);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@keyframes waveShift {
+  from {
+    background-position: 0% 50%;
+  }
+
+  to {
+    background-position: 100% 50%;
+  }
+}

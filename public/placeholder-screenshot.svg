@@ -1,0 +1,16 @@
+<svg width="1200" height="760" viewBox="0 0 1200 760" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="760" rx="44" fill="#F5FBFF"/>
+  <rect x="80" y="72" width="1040" height="616" rx="34" fill="white" stroke="#A7D8FF" stroke-width="6"/>
+  <rect x="128" y="122" width="944" height="74" rx="20" fill="#DDF1FF"/>
+  <circle cx="170" cy="159" r="13" fill="#5BADEB"/>
+  <circle cx="210" cy="159" r="13" fill="#9FE3CF"/>
+  <circle cx="250" cy="159" r="13" fill="#FFD58C"/>
+  <rect x="132" y="250" width="408" height="290" rx="28" fill="#EAF7FF"/>
+  <rect x="588" y="250" width="480" height="48" rx="18" fill="#A7D8FF"/>
+  <rect x="588" y="326" width="390" height="28" rx="14" fill="#DDF1FF"/>
+  <rect x="588" y="378" width="448" height="28" rx="14" fill="#DDF1FF"/>
+  <rect x="588" y="430" width="318" height="28" rx="14" fill="#DDF1FF"/>
+  <rect x="588" y="512" width="172" height="56" rx="20" fill="#5BADEB"/>
+  <path d="M146 606C278 548 340 638 462 585C580 533 650 604 754 564C856 524 950 538 1052 604V650H146V606Z" fill="#A7D8FF" fill-opacity=".55"/>
+  <text x="600" y="654" text-anchor="middle" fill="#123047" font-family="Arial, sans-serif" font-size="34" font-weight="700">Screenshot Placeholder</text>
+</svg>

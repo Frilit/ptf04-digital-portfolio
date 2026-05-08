@@ -140,25 +140,50 @@ a {
 .splash-core::after {
   content: "";
   position: absolute;
-  inset: -10px;
+  inset: -8px;
   border-radius: 999px;
-  background: conic-gradient(from 0deg, transparent 0 22deg, #17ffc1 22deg 35deg, transparent 35deg 118deg, #74c7ff 118deg 132deg, transparent 132deg 248deg, #e8334a 248deg 262deg, transparent 262deg 360deg);
+  background: conic-gradient(from 0deg, transparent 0 16deg, #17ffc1 16deg 19deg, transparent 19deg 72deg, #17ffc1 72deg 77deg, transparent 77deg 176deg, #17ffc1 176deg 181deg, transparent 181deg 268deg, #17ffc1 268deg 273deg, transparent 273deg 360deg);
   filter: drop-shadow(0 0 14px rgba(23, 255, 193, 0.46));
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 5px), #000 calc(100% - 4px) calc(100% - 1px), transparent 100%);
+  mask: radial-gradient(farthest-side, transparent calc(100% - 5px), #000 calc(100% - 4px) calc(100% - 1px), transparent 100%);
   animation: spinRing 5.5s linear infinite;
   z-index: 0;
 }
 
 .dragunov-ring::after,
 .splash-core::after {
-  inset: -18px;
-  opacity: 0.35;
-  animation-duration: 8s;
+  inset: -16px;
+  background: conic-gradient(from 0deg, transparent 0 44deg, rgba(116, 199, 255, 0.65) 44deg 47deg, transparent 47deg 142deg, rgba(116, 199, 255, 0.65) 142deg 146deg, transparent 146deg 254deg, rgba(116, 199, 255, 0.65) 254deg 258deg, transparent 258deg 360deg);
+  opacity: 0.62;
+  animation-duration: 8.5s;
   animation-direction: reverse;
 }
 
 .splash-slash {
   clip-path: polygon(22% 0, 100% 0, 78% 100%, 0 100%);
   animation: slashPulse 1.8s ease-in-out infinite alternate;
+}
+
+.splash-step {
+  opacity: 0;
+  transform: translateY(18px);
+  animation: splashStepIn 0.55s ease forwards;
+}
+
+.splash-step-one {
+  animation-delay: 0.15s;
+}
+
+.splash-step-two {
+  animation-delay: 0.45s;
+}
+
+.splash-step-three {
+  animation-delay: 0.74s;
+}
+
+.splash-step-four {
+  animation-delay: 1s;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -197,5 +222,12 @@ a {
   to {
     opacity: 0.42;
     transform: translateX(-50%) skewX(-10deg) scaleX(1.12);
+  }
+}
+
+@keyframes splashStepIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }

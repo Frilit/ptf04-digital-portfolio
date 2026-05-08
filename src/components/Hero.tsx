@@ -1,7 +1,5 @@
 import Link from "next/link";
 
-const dragunovImageUrl = "https://us-east-1-bandai.graphassets.com/AXzioIclSWilEjFtsMJPwz/lfxC5w5ZTnCG1nueZked";
-
 export function Hero() {
   return (
     <section className="relative mx-auto w-full max-w-7xl px-6 pb-12 pt-14 md:px-8 md:pb-16 md:pt-20">
@@ -43,9 +41,9 @@ export function Hero() {
             <div className="dragunov-ring relative mx-auto grid aspect-square w-full max-w-[360px] place-items-center rounded-full">
               <div className="relative z-10 h-[88%] w-[88%] overflow-hidden rounded-full border border-white/10 bg-[#F6F7F9] shadow-[inset_0_0_36px_rgba(0,0,0,0.18)]">
                 <img
-                  src={dragunovImageUrl}
+                  src="/dragunov-profile.jpg"
                   alt="Sergei Dragunov official TEKKEN 8 character render"
-                  className="h-full w-full object-cover object-[50%_20%]"
+                  className="h-full w-full object-cover object-center"
                 />
               </div>
             </div>
@@ -53,7 +51,7 @@ export function Hero() {
               I&apos;m Tekken Emperor btw
             </div>
             <p className="mt-5 text-center text-[11px] font-bold uppercase tracking-[0.14em] text-white/45">
-              Dragunov image source: official TEKKEN fighter page.
+              Dragunov image source: local portfolio asset.
             </p>
           </div>
         </div>

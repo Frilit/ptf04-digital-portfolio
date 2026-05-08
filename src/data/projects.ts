@@ -193,32 +193,147 @@ model.save("plant_growth_model.h5")`,
   {
     slug: "project-2",
     projectNumber: 2,
-    title: "Project 2: Editable Activity Title",
+    title: "Iris Classifier",
     shortDescription:
-      "A realistic placeholder for a second activity focused on improving structure, design, or programming logic.",
+      "A machine learning classifier that uses the Iris dataset, compares KNN with an MLP neural network, and connects the trained model to an Anvil Works frontend.",
     overview:
-      "This project can be used to showcase a second PTF04 requirement. Add the actual description, expected output, and the role it played in your technical growth.",
+      "In this project, we used the famous Iris dataset to create a KNN model and compared its performance with a Neural Network or MLP model. After training and evaluating the models in Google Colab, we created an Anvil Works frontend and connected it to the notebook so the app could classify an iris flower based on sepal length, sepal width, petal length, and petal width.",
     objectives: [
-      "Apply course concepts to a more structured activity.",
-      "Improve accuracy, readability, and presentation of the output.",
-      "Document the process through screenshots, snippets, and reflection.",
+      "Use the Iris dataset to train a machine learning model for flower classification.",
+      "Create a KNN classifier that predicts Setosa, Versicolor, or Virginica using four flower measurements.",
+      "Compare the KNN model with a Neural Network or MLP model using evaluation metrics.",
+      "Build a simple Anvil Works frontend where users can enter iris measurements.",
+      "Connect the Google Colab model to the frontend through an Anvil server callable function.",
     ],
     features: [
-      "Clear project summary with objectives and tools.",
-      "Space for important code or design decisions.",
-      "Screenshot cards that can be replaced with actual visuals.",
+      "KNN model trained on the Iris dataset.",
+      "Neural Network or MLP model used for comparison.",
+      "Model evaluation using accuracy, confusion matrix, and classification report.",
+      "Anvil Works frontend with input boxes for sepal and petal measurements.",
+      "Prediction output that displays the classified iris species with a matching flower image.",
     ],
-    codeSnippets: commonSnippets,
-    screenshots: placeholderScreenshots,
-    tools: ["HTML", "CSS", "JavaScript", "Git"],
+    codeSnippets: [
+      {
+        title: "KNN Model Training",
+        language: "python",
+        code: `X = iris.data
+y = iris.target
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X,
+    y,
+    test_size=0.2,
+    random_state=4,
+)
+
+knn = KNeighborsClassifier(n_neighbors=10)
+knn.fit(X, y)`,
+        explanation:
+          "This part prepares the Iris dataset, splits it for testing, and trains the KNN model. I used this so the model could learn the relationship between the flower measurements and the correct iris species.",
+      },
+      {
+        title: "KNN Model Evaluation",
+        language: "python",
+        code: `print("Scikit-learn kNN Model")
+print(accuracy_score(y_test, y_pred))
+print(confusion_matrix(y_test, y_pred))
+print(classification_report(y_test, y_pred))`,
+        explanation:
+          "This code checks how well the KNN model performed. The accuracy, confusion matrix, and classification report helped me see if the model was classifying the iris species correctly.",
+      },
+      {
+        title: "Anvil Callable Prediction Function",
+        language: "python",
+        code: `import anvil.server
+
+anvil.server.connect("YOUR_ANVIL_UPLINK_KEY")
+
+@anvil.server.callable
+def predict_iris(sepal_length, sepal_width, petal_length, petal_width):
+    classification = knn.predict([[
+        sepal_length,
+        sepal_width,
+        petal_length,
+        petal_width,
+    ]])
+    return iris.target_names[classification][0]`,
+        explanation:
+          "This function connects the Google Colab notebook to Anvil Works. The frontend sends the measurements to this callable function, then the function returns the predicted iris species.",
+      },
+    ],
+    screenshots: [
+      {
+        title: "Iris Classifier Preview Image",
+        description:
+          "A flower preview image used to represent the Iris Classifier project on the portfolio card.",
+        image: "/projects/project-2/iris-preview.png",
+      },
+      {
+        title: "KNN Model Training",
+        description:
+          "Shows the Iris data being assigned, split, and trained with a KNeighborsClassifier model.",
+        image: "/projects/project-2/knn-model-training.png",
+      },
+      {
+        title: "KNN Model Evaluation",
+        description:
+          "Shows the KNN model accuracy, confusion matrix, and classification report used to check model performance.",
+        image: "/projects/project-2/knn-model-evaluation.png",
+      },
+      {
+        title: "Neural Network MLP Evaluation",
+        description:
+          "Shows the evaluation results of the neural network model so it could be compared with the KNN classifier.",
+        image: "/projects/project-2/mlp-model-evaluation.png",
+      },
+      {
+        title: "Setosa Prediction Result",
+        description:
+          "Shows the Anvil Works frontend predicting the Setosa species using sample sepal and petal measurements.",
+        image: "/projects/project-2/setosa-result.png",
+      },
+      {
+        title: "Versicolor Prediction Result",
+        description:
+          "Shows the frontend predicting the Versicolor species and displaying its flower image.",
+        image: "/projects/project-2/versicolor-result.png",
+      },
+      {
+        title: "Virginica Prediction Result",
+        description:
+          "Shows the frontend predicting the Virginica species and displaying its flower image.",
+        image: "/projects/project-2/virginica-result.png",
+      },
+    ],
+    tools: [
+      "Google Colab",
+      "Python",
+      "Anvil Works",
+      "Anvil Uplink",
+      "scikit-learn",
+      "Iris Dataset",
+      "KNN",
+      "MLP Neural Network",
+      "Matplotlib",
+      "Classification Report",
+      "Confusion Matrix",
+    ],
     challenges: [
       {
-        problem: "Making the output easier to understand for viewers.",
-        solution: "Use headings, labels, comments, and clean formatting so the work is easier to follow.",
+        problem:
+          "I had a hard time connecting the function from the Google Colab notebook so that the model predictions would properly show in the Anvil Works frontend.",
+        solution:
+          "I studied the code carefully, checked that the Anvil frontend text boxes and output fields were configured correctly, and made sure the function inside @anvil.server.callable worked with the proper Anvil uplink key.",
+      },
+      {
+        problem:
+          "It was also confusing at first to compare the KNN model with the Neural Network or MLP model because both used evaluation metrics that needed to be interpreted.",
+        solution:
+          "I reviewed the accuracy, confusion matrix, and classification report outputs so I could understand how each model performed on the Iris dataset.",
       },
     ],
     reflection:
-      "Replace this with your own reflection about Project 2. Mention what became easier, what remained challenging, and what you improved.",
+      "This project helped me understand the fundamentals of Anvil Works and how a frontend can connect to a machine learning model running in Google Colab. I learned more about how input fields, output labels, callable functions, and uplink keys work together to make the app respond to user input. I also gained more knowledge about training a model using the Iris dataset and comparing model performance through evaluation metrics. Overall, this project helped me see how machine learning can become more useful when it is connected to an actual interface that people can interact with.",
   },
   {
     slug: "project-3",

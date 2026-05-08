@@ -23,8 +23,8 @@ html {
 
 body {
   min-height: 100vh;
-  background: #f5fbff;
-  color: #123047;
+  background: #05070c;
+  color: #eef6ff;
   font-family: "Inter", "Segoe UI", ui-sans-serif, system-ui, sans-serif;
 }
 
@@ -49,9 +49,11 @@ a {
   inset: 0;
   z-index: -2;
   background:
-    linear-gradient(135deg, rgba(167, 216, 255, 0.16) 0 25%, transparent 25% 100%),
-    linear-gradient(225deg, rgba(216, 247, 237, 0.2) 0 18%, transparent 18% 100%),
-    #f5fbff;
+    radial-gradient(circle at 18% 20%, rgba(28, 155, 255, 0.22), transparent 28%),
+    radial-gradient(circle at 82% 12%, rgba(232, 51, 74, 0.24), transparent 28%),
+    linear-gradient(135deg, rgba(116, 199, 255, 0.1) 0 14%, transparent 14% 100%),
+    linear-gradient(225deg, rgba(232, 51, 74, 0.12) 0 14%, transparent 14% 100%),
+    #05070c;
 }
 
 .page-shell::after {
@@ -61,8 +63,8 @@ a {
   z-index: -1;
   height: 28vh;
   background:
-    linear-gradient(180deg, rgba(245, 251, 255, 0) 0%, rgba(167, 216, 255, 0.28) 100%),
-    repeating-linear-gradient(135deg, rgba(91, 173, 235, 0.12) 0 2px, transparent 2px 18px);
+    linear-gradient(180deg, rgba(5, 7, 12, 0) 0%, rgba(28, 155, 255, 0.18) 100%),
+    repeating-linear-gradient(135deg, rgba(232, 51, 74, 0.12) 0 2px, transparent 2px 18px);
   clip-path: polygon(0 38%, 12% 48%, 24% 34%, 38% 50%, 52% 35%, 66% 46%, 82% 30%, 100% 42%, 100% 100%, 0 100%);
   pointer-events: none;
 }
@@ -92,6 +94,44 @@ a {
 
 .focus-ring:focus-visible {
   box-shadow: 0 0 0 4px rgba(91, 173, 235, 0.28);
+}
+
+.tekken-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("https://us-east-1-bandai.graphassets.com/AXzioIclSWilEjFtsMJPwz/eJHTGzfGROm8ImDgEI8z");
+  background-position: center;
+  background-size: cover;
+  filter: saturate(1.08) contrast(1.08);
+  transform: scale(1.02);
+}
+
+.tekken-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.035) 0 1px, transparent 1px 4px),
+    linear-gradient(115deg, transparent 0 42%, rgba(255, 255, 255, 0.08) 42% 43%, transparent 43% 100%);
+  mix-blend-mode: screen;
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+.arcade-title {
+  text-shadow:
+    0 0 22px rgba(116, 199, 255, 0.45),
+    5px 5px 0 rgba(232, 51, 74, 0.28);
+}
+
+.arcade-panel,
+.arcade-card {
+  clip-path: polygon(0 0, calc(100% - 18px) 0, 100% 18px, 100% 100%, 18px 100%, 0 calc(100% - 18px));
+}
+
+.tekken-button {
+  clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 14px 100%, 0 calc(100% - 14px));
 }
 
 @media (prefers-reduced-motion: reduce) {

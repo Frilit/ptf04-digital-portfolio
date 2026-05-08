@@ -32,21 +32,21 @@ export default function AboutPage() {
         {highlights.map((item) => (
           <article
             key={item.title}
-            className="rounded-[28px] border border-[#D5ECFF] bg-white/90 p-7 shadow-[0_18px_45px_rgba(18,48,71,0.08)] transition hover:-translate-y-1 hover:shadow-[0_22px_50px_rgba(18,48,71,0.12)]"
+            className="arcade-card border border-white/10 bg-[#090D15]/92 p-7 shadow-[0_22px_52px_rgba(0,0,0,0.34)] transition hover:-translate-y-1 hover:border-[#74C7FF]/55"
           >
-            <h2 className="text-2xl font-black text-[#123047]">{item.title}</h2>
-            <p className="mt-4 text-base leading-8 text-[#31536B]">{item.body}</p>
+            <h2 className="text-2xl font-black uppercase text-white">{item.title}</h2>
+            <p className="mt-4 text-base leading-8 text-[#C7D8EA]">{item.body}</p>
           </article>
         ))}
       </div>
 
-      <article className="soft-grid relative mt-8 overflow-hidden rounded-[32px] border border-[#BFE4FF] bg-white p-8 shadow-[0_18px_45px_rgba(18,48,71,0.08)] md:p-10">
+      <article className="arcade-card relative mt-8 overflow-hidden border border-white/10 bg-[#090D15]/92 p-8 shadow-[0_24px_58px_rgba(0,0,0,0.36)] md:p-10">
         <div className="relative z-10 max-w-4xl">
-          <p className="text-sm font-bold uppercase tracking-[0.2em] text-[#5BADEB]">Technical Growth</p>
-          <h2 className="mt-3 text-3xl font-black text-[#123047] md:text-4xl">
+          <p className="text-sm font-black uppercase tracking-[0.2em] text-[#74C7FF]">Technical Growth</p>
+          <h2 className="arcade-title mt-3 text-3xl font-black uppercase text-white md:text-4xl">
             PTF04 helped me become more confident with structure, problem-solving, and presentation.
           </h2>
-          <p className="mt-5 text-base leading-8 text-[#31536B]">
+          <p className="mt-5 text-base leading-8 text-[#C7D8EA]">
             As I worked through the projects, I learned how important it is to plan before building, test outputs
             carefully, and explain technical work in a way that feels clear. This coded portfolio is also part of that
             growth because it turns my previous Google Sites compilation into a deployable website built with modern web

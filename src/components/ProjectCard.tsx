@@ -9,15 +9,15 @@ type ProjectCardProps = {
 
 export function ProjectCard({ project, compact = false }: ProjectCardProps) {
   return (
-    <article className="group flex h-full flex-col rounded-[28px] border border-[#D5ECFF] bg-white p-5 shadow-[0_16px_35px_rgba(18,48,71,0.08)] transition duration-300 hover:-translate-y-1.5 hover:border-[#A7D8FF] hover:shadow-[0_22px_50px_rgba(18,48,71,0.12)]">
+    <article className="arcade-card group flex h-full flex-col border border-white/10 bg-[#090D15]/92 p-5 shadow-[0_20px_48px_rgba(0,0,0,0.34)] transition duration-300 hover:-translate-y-1.5 hover:border-[#74C7FF]/60 hover:shadow-[0_0_36px_rgba(28,155,255,0.18)]">
       <div className="mb-5 flex items-center justify-between gap-3">
-        <span className="rounded-full bg-[#E5F5FF] px-3 py-1.5 text-xs font-black uppercase tracking-[0.14em] text-[#267FC0]">
+        <span className="rounded-sm bg-[#E8334A] px-3 py-1.5 text-xs font-black uppercase tracking-[0.14em] text-white">
           Project {project.projectNumber}
         </span>
-        <span className="h-3 w-10 rounded-full bg-gradient-to-r from-[#A7D8FF] via-[#D8F7ED] to-[#FFF1C7]" aria-hidden="true" />
+        <span className="h-3 w-10 rounded-full bg-gradient-to-r from-[#1C9BFF] via-white to-[#E8334A]" aria-hidden="true" />
       </div>
-      <h2 className="text-xl font-black leading-tight text-[#123047]">{project.title}</h2>
-      <p className="mt-3 flex-1 text-sm leading-7 text-[#31536B]">{project.shortDescription}</p>
+      <h2 className="text-xl font-black uppercase leading-tight text-white">{project.title}</h2>
+      <p className="mt-3 flex-1 text-sm leading-7 text-[#C7D8EA]">{project.shortDescription}</p>
       {!compact ? (
         <div className="mt-5 flex flex-wrap gap-2">
           {project.tools.slice(0, 4).map((tool) => (
@@ -27,7 +27,7 @@ export function ProjectCard({ project, compact = false }: ProjectCardProps) {
       ) : null}
       <Link
         href={`/projects/${project.slug}`}
-        className="focus-ring mt-6 inline-flex items-center justify-center rounded-full bg-[#123047] px-5 py-3 text-sm font-black text-white transition group-hover:bg-[#5BADEB]"
+        className="focus-ring tekken-button mt-6 inline-flex items-center justify-center rounded-sm bg-[#1C9BFF] px-5 py-3 text-sm font-black uppercase tracking-[0.1em] text-white transition group-hover:bg-[#E8334A]"
       >
         View Project
       </Link>

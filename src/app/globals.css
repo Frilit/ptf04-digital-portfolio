@@ -100,11 +100,11 @@ a {
   content: "";
   position: absolute;
   inset: 0;
-  background-image: url("https://us-east-1-bandai.graphassets.com/AXzioIclSWilEjFtsMJPwz/eJHTGzfGROm8ImDgEI8z");
-  background-position: center;
-  background-size: cover;
-  filter: saturate(1.08) contrast(1.08);
-  transform: scale(1.02);
+  background:
+    radial-gradient(circle at 24% 34%, rgba(116, 199, 255, 0.18), transparent 18%),
+    radial-gradient(circle at 82% 24%, rgba(232, 51, 74, 0.22), transparent 24%),
+    linear-gradient(112deg, rgba(4, 8, 14, 0.98) 0 47%, rgba(15, 24, 38, 0.9) 47% 49%, rgba(27, 7, 17, 0.9) 49% 100%),
+    repeating-linear-gradient(135deg, rgba(116, 199, 255, 0.1) 0 2px, transparent 2px 22px);
 }
 
 .tekken-hero::after {
@@ -134,6 +134,33 @@ a {
   clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 14px 100%, 0 calc(100% - 14px));
 }
 
+.dragunov-ring::before,
+.dragunov-ring::after,
+.splash-core::before,
+.splash-core::after {
+  content: "";
+  position: absolute;
+  inset: -10px;
+  border-radius: 999px;
+  background: conic-gradient(from 0deg, transparent 0 22deg, #17ffc1 22deg 35deg, transparent 35deg 118deg, #74c7ff 118deg 132deg, transparent 132deg 248deg, #e8334a 248deg 262deg, transparent 262deg 360deg);
+  filter: drop-shadow(0 0 14px rgba(23, 255, 193, 0.46));
+  animation: spinRing 5.5s linear infinite;
+  z-index: 0;
+}
+
+.dragunov-ring::after,
+.splash-core::after {
+  inset: -18px;
+  opacity: 0.35;
+  animation-duration: 8s;
+  animation-direction: reverse;
+}
+
+.splash-slash {
+  clip-path: polygon(22% 0, 100% 0, 78% 100%, 0 100%);
+  animation: slashPulse 1.8s ease-in-out infinite alternate;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -152,5 +179,23 @@ a {
 
   to {
     background-position: 100% 50%;
+  }
+}
+
+@keyframes spinRing {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes slashPulse {
+  from {
+    opacity: 0.18;
+    transform: translateX(-50%) skewX(-10deg);
+  }
+
+  to {
+    opacity: 0.42;
+    transform: translateX(-50%) skewX(-10deg) scaleX(1.12);
   }
 }

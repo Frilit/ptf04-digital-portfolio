@@ -19,7 +19,7 @@ export function Header() {
       <nav className="mx-auto flex h-20 w-full max-w-7xl items-center justify-between px-6 md:px-8" aria-label="Main">
         <Link href="/" className="focus-ring rounded-2xl text-left" onClick={() => setIsOpen(false)}>
           <span className="block text-base font-black text-white">Fritzch Ainsley Santos</span>
-          <span className="block text-xs font-black uppercase tracking-[0.18em] text-[#74C7FF]">PTF04 Arcade</span>
+          <span className="block text-xs font-black uppercase tracking-[0.18em] text-[#74C7FF]">PTF04 Portfolio</span>
         </Link>
 
         <div className="hidden items-center gap-2 md:flex">

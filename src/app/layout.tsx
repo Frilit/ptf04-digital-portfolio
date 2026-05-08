@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
+import { RouteExperience } from "@/components/RouteExperience";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -22,6 +23,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <div className="page-shell flex min-h-screen flex-col">
+          <RouteExperience />
           <Header />
           <main className="flex-1 pt-20">{children}</main>
           <Footer />

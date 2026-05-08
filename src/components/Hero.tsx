@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { ArcadeJoystick } from "./ArcadeJoystick";
+
+const dragunovImageUrl = "https://us-east-1-bandai.graphassets.com/AXzioIclSWilEjFtsMJPwz/lfxC5w5ZTnCG1nueZked";
 
 export function Hero() {
   return (
@@ -9,7 +10,7 @@ export function Hero() {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_78%_24%,rgba(232,51,74,0.35),transparent_28%),radial-gradient(circle_at_26%_68%,rgba(91,173,235,0.36),transparent_28%)]" />
         <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-[#1C9BFF] via-white to-[#E8334A]" />
 
-        <div className="relative z-10 grid gap-10 lg:grid-cols-[minmax(0,1fr)_380px] lg:items-center">
+        <div className="relative z-10 grid gap-10 lg:grid-cols-[minmax(0,1fr)_420px] lg:items-center">
           <div className="max-w-4xl">
             <p className="mb-4 inline-flex rounded-sm border border-[#74C7FF]/40 bg-black/55 px-4 py-2 text-xs font-black uppercase tracking-[0.22em] text-[#74C7FF] shadow-[0_0_22px_rgba(91,173,235,0.24)]">
               PTF04 - Professional Track 4
@@ -38,7 +39,23 @@ export function Hero() {
               </Link>
             </div>
           </div>
-          <ArcadeJoystick />
+          <div className="relative mx-auto w-full max-w-md">
+            <div className="dragunov-ring relative mx-auto grid aspect-square w-full max-w-[360px] place-items-center rounded-full">
+              <div className="relative z-10 h-[88%] w-[88%] overflow-hidden rounded-full border border-white/10 bg-[#F6F7F9] shadow-[inset_0_0_36px_rgba(0,0,0,0.18)]">
+                <img
+                  src={dragunovImageUrl}
+                  alt="Sergei Dragunov official TEKKEN 8 character render"
+                  className="h-full w-full object-cover object-[50%_20%]"
+                />
+              </div>
+            </div>
+            <div className="mx-auto -mt-8 w-fit rounded-full border border-white/10 bg-black/70 px-5 py-3 text-center text-sm font-black uppercase tracking-[0.14em] text-white shadow-[0_14px_35px_rgba(0,0,0,0.4)] backdrop-blur">
+              I&apos;m Tekken Emperor btw
+            </div>
+            <p className="mt-5 text-center text-[11px] font-bold uppercase tracking-[0.14em] text-white/45">
+              Dragunov image source: official TEKKEN fighter page.
+            </p>
+          </div>
         </div>
 
         <div className="relative z-10 mt-12 grid gap-4 md:grid-cols-3">
@@ -53,10 +70,6 @@ export function Hero() {
             </div>
           ))}
         </div>
-
-        <p className="relative z-10 mt-8 text-[11px] font-bold uppercase tracking-[0.16em] text-white/45">
-          Background source: official TEKKEN 8 media from Bandai Namco Entertainment.
-        </p>
       </div>
     </section>
   );

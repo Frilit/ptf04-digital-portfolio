@@ -70,32 +70,125 @@ export const projects: Project[] = [
   {
     slug: "project-1",
     projectNumber: 1,
-    title: "Project 1: Editable Activity Title",
+    title: "Machine Learning on Plant Growth",
     shortDescription:
-      "A placeholder summary for the first PTF04 project, ready to be replaced with the actual activity details.",
+      "A Google Colab machine learning activity that compares linear regression and a simple neural network for predicting plant growth based on temperature.",
     overview:
-      "This project placeholder represents one of the early activities completed in PTF04. Replace this overview with the actual project background, topic, and final output.",
+      "In this project, we created a Google Colab notebook that simulated plant growth across different temperature values. We first used a linear regression model to predict plant growth, then improved the approach by building a simple neural network model that could better follow the curved growth pattern where plant growth increases, reaches an ideal temperature range, and then declines.",
     objectives: [
-      "Identify the main purpose of the project and the problem it solves.",
-      "Practice applying foundational technical skills introduced in the course.",
-      "Create a clear output that demonstrates understanding of the activity requirements.",
+      "Generate synthetic data that represents the relationship between temperature and plant growth.",
+      "Train a linear regression model and observe how it performs on a non-linear growth pattern.",
+      "Build a simple neural network model to create a more flexible prediction curve.",
+      "Compare the results of both models through plotted visualizations.",
+      "Develop a clearer understanding of how machine learning models learn from data.",
     ],
     features: [
-      "Editable feature list for important functions or outputs.",
-      "Organized layout for presenting process, code, and results.",
-      "Reflection section to connect the project to your learning journey.",
+      "Synthetic plant growth data simulation using temperature values from 0 C to 40 C.",
+      "Linear regression model that shows the limitation of straight-line prediction.",
+      "Neural network model that captures the rise-and-fall pattern of plant growth more accurately.",
+      "Graph visualizations comparing true growth data with model predictions.",
+      "Saved trained neural network model for later reuse or reference.",
     ],
-    codeSnippets: commonSnippets,
-    screenshots: placeholderScreenshots,
-    tools: ["HTML", "CSS", "JavaScript", "VS Code"],
+    codeSnippets: [
+      {
+        title: "Plant Growth Data Simulation",
+        language: "python",
+        code: `np.random.seed(42)
+
+temperatures = np.linspace(0, 40, 500)
+growth = -0.1 * (temperatures - 25) ** 2 + 50 + np.random.normal(
+    0,
+    5,
+    size=temperatures.shape,
+)`,
+        explanation:
+          "This code creates synthetic plant growth data. The formula simulates growth increasing toward an ideal temperature near 25 C, then decreasing as the temperature moves farther away from that range.",
+      },
+      {
+        title: "Linear Regression Training",
+        language: "python",
+        code: `model = LinearRegression()
+model.fit(temperatures, growth)
+
+growth_pred = model.predict(temperatures)`,
+        explanation:
+          "This snippet trains a linear regression model and uses it to predict plant growth. It is useful for comparison, but the straight-line prediction cannot fully match the curved plant growth pattern.",
+      },
+      {
+        title: "Neural Network Model",
+        language: "python",
+        code: `model = Sequential([
+    Dense(16, activation="relu", input_shape=(1,)),
+    Dense(16, activation="relu"),
+    Dense(1),
+])
+
+model.compile(optimizer=Adam(learning_rate=0.001), loss="mean_squared_error")
+model.fit(temperatures, growth, epochs=1000, verbose=0)
+model.save("plant_growth_model.h5")`,
+        explanation:
+          "This code builds and trains a simple neural network. With hidden layers and ReLU activation, the model can learn a more flexible pattern than linear regression and better follow the growth curve.",
+      },
+    ],
+    screenshots: [
+      {
+        title: "Linear Regression Results",
+        description:
+          "Displays the true plant growth data and the linear regression prediction line. The straight line shows why linear regression is limited for this type of curved data.",
+        image: "/projects/project-1/linear-regression-results.png",
+      },
+      {
+        title: "Neural Network Results",
+        description:
+          "Displays the neural network prediction curve, which follows the plant growth pattern more closely than the linear regression model.",
+        image: "/projects/project-1/neural-network-results.png",
+      },
+      {
+        title: "Linear Regression Training",
+        description:
+          "Shows the training and prediction steps for the linear regression model.",
+        image: "/projects/project-1/linear-regression-training.png",
+      },
+      {
+        title: "Plant Growth Simulation Code",
+        description:
+          "Shows how the synthetic temperature and plant growth data were generated before training the models.",
+        image: "/projects/project-1/plant-growth-simulation.png",
+      },
+      {
+        title: "Neural Network Training",
+        description:
+          "Shows the neural network architecture, compilation step, training process, and saved model file.",
+        image: "/projects/project-1/neural-network-training.png",
+      },
+    ],
+    tools: [
+      "Google Colab",
+      "Python",
+      "NumPy",
+      "Matplotlib",
+      "scikit-learn",
+      "TensorFlow",
+      "Keras",
+      "Linear Regression",
+      "Neural Networks",
+    ],
     challenges: [
       {
-        problem: "Understanding how to organize the project requirements into a finished output.",
-        solution: "Break the task into smaller parts, test each section, and improve the final presentation step by step.",
+        problem:
+          "I had a hard time understanding how plant growth was simulated using temperature values and why the generated data formed a curved pattern.",
+        solution:
+          "I analyzed the formula carefully, connected each part of the equation to the graph output, and pieced together the information until the simulation became clearer.",
+      },
+      {
+        problem:
+          "I also struggled with understanding how neural networks worked, especially how the layers helped improve the prediction compared with linear regression.",
+        solution:
+          "I reviewed the model step by step, compared the linear regression output with the neural network output, and used the visual graphs to understand how the neural network learned a better curve.",
       },
     ],
     reflection:
-      "Replace this reflection with what you learned from Project 1, including the skills you practiced and the parts that helped you grow.",
+      "This project helped me understand that different machine learning models can produce very different results depending on the pattern of the data. Linear regression was easier to understand, but it also showed its limitation because plant growth does not follow a simple straight line. The neural network was more challenging at first, but seeing its prediction curve made me understand why it can be useful for more complex relationships. Through this activity, I improved my ability to read code, interpret graphs, compare model outputs, and connect machine learning concepts to a practical example.",
   },
   {
     slug: "project-2",

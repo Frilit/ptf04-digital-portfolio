@@ -481,32 +481,188 @@ def predict_boston_price(rm, lstat, ptratio):
   {
     slug: "project-4",
     projectNumber: 4,
-    title: "Project 4: Editable Activity Title",
+    title: "Improving the Boston House Price Prediction Model",
     shortDescription:
-      "A placeholder for a mid-course project that shows progress in planning, coding, testing, or presenting work.",
+      "An improved Boston house price activity that compares the original neural network with early stopping and an extra hidden layer before deploying an upgraded Anvil frontend.",
     overview:
-      "This editable overview should be replaced with the actual story of Project 4. Include what the project asked you to create and how you approached it.",
+      "While we already created a notebook for Boston house price prediction, it was still possible to test if the model performance could be improved. In this activity, we used the original notebook and modified it to compare three versions: the original model, the original model with early stopping, and early stopping combined with an additional hidden layer. After comparing the models, we found out that the original code had the best performance out of the three. After this, we made an improved Anvil Works frontend for adding house entries and displaying predicted prices.",
     objectives: [
-      "Demonstrate improved technical planning.",
-      "Create an output that is functional, readable, and properly presented.",
-      "Reflect on the problem-solving steps used during development.",
+      "Compare the original Boston house price model with optimized versions.",
+      "Test early stopping as a way to control model training.",
+      "Add another hidden layer and observe if it improves or lowers performance.",
+      "Analyze model results using MAE, MSE, RMSE, and R2 score.",
+      "Improve the Anvil frontend for saving and displaying prediction entries.",
     ],
     features: [
-      "Structured overview and objective list.",
-      "Visual placeholders for screenshots and outputs.",
-      "Challenge and solution notes for honest documentation.",
+      "Boston housing dataset used for price prediction.",
+      "Original simple neural network model used as the baseline.",
+      "Early stopping version that stops training when validation loss stops improving.",
+      "Additional hidden layer version used for model comparison.",
+      "Metric comparison using MAE, MSE, RMSE, and R2 score.",
+      "Improved Anvil Works frontend with add, update, delete, and saved entry functions.",
     ],
-    codeSnippets: commonSnippets,
-    screenshots: placeholderScreenshots,
-    tools: ["JavaScript", "TypeScript", "CSS", "Vercel"],
+    codeSnippets: [
+      {
+        title: "Original Model Baseline",
+        language: "python",
+        code: `model = Sequential()
+model.add(Dense(16, activation="relu", input_shape=(X_train.shape[1],)))
+model.add(Dense(8, activation="relu"))
+model.add(Dense(1))
+
+model.compile(optimizer="adam", loss="mse")
+
+history = model.fit(
+    X_train,
+    y_train,
+    validation_split=0.2,
+    epochs=300,
+    batch_size=16,
+    verbose=1,
+)`,
+        explanation:
+          "This was the original model used as the baseline. It became important because after testing the optimized versions, this original setup still gave the best overall performance.",
+      },
+      {
+        title: "Early Stopping With Extra Hidden Layer",
+        language: "python",
+        code: `model = Sequential()
+model.add(Dense(16, activation="relu", input_shape=(X_train.shape[1],)))
+model.add(Dense(16, activation="relu"))
+model.add(Dense(1))
+
+early_stop = EarlyStopping(
+    monitor="val_loss",
+    patience=10,
+    restore_best_weights=True,
+)
+
+history = model.fit(
+    X_train,
+    y_train,
+    epochs=300,
+    validation_split=0.2,
+    callbacks=[early_stop],
+)`,
+        explanation:
+          "This version added early stopping and another hidden layer. I used this to check if more model changes would improve the results, but the comparison showed that adding more complexity did not automatically make it better.",
+      },
+      {
+        title: "Anvil Functions for Prediction Entries",
+        language: "python",
+        code: `@anvil.server.callable
+def predict_house_price(rm, lstat, ptratio):
+    sample_input = np.array([[rm, lstat, ptratio]])
+    sample_scaled = scaler.transform(sample_input)
+    predicted_price = model.predict(sample_scaled)
+    return float(predicted_price[0][0] * 1000)
+
+@anvil.server.callable
+def add_entry(entry_data):
+    app_tables.entries.add_row(
+        title=entry_data.get("house_name", "Unnamed House"),
+        content=str(entry_data.get("predicted_price", "")),
+        image=entry_data.get("image"),
+        created=datetime.now(),
+    )`,
+        explanation:
+          "This part connects the model to the improved Anvil frontend. It predicts the house price, scales the input first, and saves entries with the house name, predicted price, and image.",
+      },
+    ],
+    screenshots: [
+      {
+        title: "Anvil Homepage",
+        description:
+          "Shows the improved Anvil Works homepage with a map and saved house prediction entries.",
+        image: "/projects/project-4/anvil-homepage.png",
+      },
+      {
+        title: "Original Model Code",
+        description:
+          "Shows the baseline neural network model that ended up performing best compared with the modified versions.",
+        image: "/projects/project-4/original-code.png",
+      },
+      {
+        title: "Model With Early Stopping",
+        description:
+          "Shows the model version that uses early stopping to stop training when validation loss no longer improves.",
+        image: "/projects/project-4/model-early-stopping.png",
+      },
+      {
+        title: "Early Stopping With Extra Hidden Layer",
+        description:
+          "Shows the modified neural network with an additional hidden layer and early stopping callback.",
+        image: "/projects/project-4/early-stopping-extra-layer.png",
+      },
+      {
+        title: "MAE, MSE, and RMSE Comparison",
+        description:
+          "Compares the error values of the original, early stopping, and extra hidden layer models.",
+        image: "/projects/project-4/mae-mse-rmse-comparison.png",
+      },
+      {
+        title: "R2 Score Comparison",
+        description:
+          "Shows that the original model had the highest R2 score compared with the modified models.",
+        image: "/projects/project-4/r2-comparison.png",
+      },
+      {
+        title: "Anvil Backend Functions",
+        description:
+          "Shows the server callable functions used for prediction, adding entries, retrieving entries, updating entries, and deleting entries.",
+        image: "/projects/project-4/anvil-functions.png",
+      },
+      {
+        title: "Sample Result 1",
+        description:
+          "Shows a sample Anvil entry with a predicted house price after entering RM, LSTAT, and PTRATIO values.",
+        image: "/projects/project-4/result-sample-1.png",
+      },
+      {
+        title: "Sample Result 2",
+        description:
+          "Shows another saved prediction entry from the improved Anvil frontend.",
+        image: "/projects/project-4/result-sample-2.png",
+      },
+      {
+        title: "Sample Result 3",
+        description:
+          "Shows a third prediction result, proving that the frontend can handle different house inputs.",
+        image: "/projects/project-4/result-sample-3.png",
+      },
+    ],
+    tools: [
+      "Google Colab",
+      "Python",
+      "NumPy",
+      "Pandas",
+      "scikit-learn",
+      "TensorFlow",
+      "Keras",
+      "EarlyStopping",
+      "StandardScaler",
+      "Boston Housing Dataset",
+      "Anvil Works",
+      "Anvil Uplink",
+      "Anvil Data Tables",
+      "Neural Network",
+    ],
     challenges: [
       {
-        problem: "Fixing errors that appeared after connecting multiple parts of the project.",
-        solution: "Check one part at a time, read error messages carefully, and test again after each fix.",
+        problem:
+          "I had a hard time understanding why adding different model features, like early stopping or another hidden layer, did not improve the performance and even made it slightly worse.",
+        solution:
+          "I compared the models using the actual metrics instead of assuming that more changes would always make the model better. By checking MAE, MSE, RMSE, and R2 score, I was able to see that the original model performed best and that optimization should be based on results, not just added complexity.",
+      },
+      {
+        problem:
+          "The improved Anvil frontend also required more backend functions because entries needed to be added, displayed, updated, and deleted.",
+        solution:
+          "I reviewed each Anvil server callable function one at a time and made sure the prediction, scaling, and database entry fields were connected properly.",
       },
     ],
     reflection:
-      "Replace this with what Project 4 taught you about persistence, code organization, and improving a project through revision.",
+      "This project helped me understand that improving a model does not always mean adding more features or more layers. I learned that model comparison and analysis are important because the original code can still perform better than the versions with early stopping or extra hidden layers. This activity also helped me practice reading evaluation results instead of relying only on assumptions. I also improved my understanding of Anvil Works because the frontend became more complete, with stored entries and backend functions. Overall, I learned more about testing model changes, identifying performance differences, and using the results to decide which model is actually better.",
   },
   {
     slug: "project-5",

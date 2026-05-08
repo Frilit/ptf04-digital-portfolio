@@ -65,7 +65,7 @@ export function ProjectDetailTemplate({ project }: ProjectDetailTemplateProps) {
 
           <DetailSection title="D. Screenshots / Visuals">
             <div className="grid gap-5 md:grid-cols-2">
-              {project.screenshots.map((screenshot) => (
+              {project.screenshots.filter((screenshot) => !screenshot.previewOnly).map((screenshot) => (
                 <ScreenshotCard key={`${project.slug}-${screenshot.title}`} screenshot={screenshot} />
               ))}
             </div>

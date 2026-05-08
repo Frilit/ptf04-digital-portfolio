@@ -9,6 +9,7 @@ export type Screenshot = {
   title: string;
   description: string;
   image: string;
+  previewOnly?: boolean;
 };
 
 export type Challenge = {
@@ -338,32 +339,144 @@ def predict_iris(sepal_length, sepal_width, petal_length, petal_width):
   {
     slug: "project-3",
     projectNumber: 3,
-    title: "Project 3: Editable Activity Title",
+    title: "Boston House Price Prediction",
     shortDescription:
-      "An editable card for a project that may involve layout, interface design, problem solving, or technical documentation.",
+      "A neural network prediction project that uses selected Boston housing features and an Anvil Works frontend to estimate house prices.",
     overview:
-      "Use this page to document the third project from your PTF04 compilation. Describe the context, requirements, and finished result in your own words.",
+      "In this project, we used the Boston house price dataset to predict the prices of houses located in Boston based on three important features. After creating the Google Colab notebook, we identified the most relevant input features, applied feature scaling, and trained a simple neural network for 300 epochs because it gave the best possible result. After that, we deployed the model through an Anvil Works frontend so users could easily enter values and predict house prices.",
     objectives: [
-      "Build confidence in turning instructions into a working output.",
-      "Use appropriate tools and technologies for the activity.",
-      "Explain the project clearly through a portfolio-ready format.",
+      "Identify the most relevant features for predicting Boston house prices.",
+      "Prepare and scale the selected input data before model training.",
+      "Build and optimize a simple neural network model.",
+      "Connect the trained model to an Anvil Works frontend for user predictions.",
     ],
     features: [
-      "Project detail page with reusable sections.",
-      "Feature highlights for important functionality.",
-      "Editable content that can be updated without changing the page layout.",
+      "Boston housing dataset used for price prediction.",
+      "Correlation-based feature selection using RM, LSTAT, and PTRATIO.",
+      "Feature scaling with a scaler before model training and prediction.",
+      "Simple neural network trained for 300 epochs.",
+      "Anvil Works frontend for entering values and displaying predicted prices.",
     ],
-    codeSnippets: commonSnippets,
-    screenshots: placeholderScreenshots,
-    tools: ["TypeScript", "CSS", "Browser DevTools", "VS Code"],
+    codeSnippets: [
+      {
+        title: "Identifying Relevant Features",
+        language: "python",
+        code: `corr["price"].sort_values(ascending=False)
+
+selected_features = ["rm", "lstat", "ptratio"]`,
+        explanation:
+          "This part checks which dataset columns have the strongest relationship with price. I used this to decide which features should be included as inputs for the model.",
+      },
+      {
+        title: "Building and Training the Neural Network",
+        language: "python",
+        code: `model = Sequential()
+model.add(Dense(16, activation="relu", input_shape=(X_train.shape[1],)))
+model.add(Dense(8, activation="relu"))
+model.add(Dense(1))
+
+model.compile(optimizer="adam", loss="mse")
+
+history = model.fit(
+    X_train,
+    y_train,
+    validation_split=0.2,
+    epochs=300,
+    batch_size=16,
+    verbose=1,
+)`,
+        explanation:
+          "This code creates a simple neural network with Dense layers and trains it for 300 epochs. The goal was to optimize the model enough to produce better house price predictions.",
+      },
+      {
+        title: "Anvil Server Callable Prediction",
+        language: "python",
+        code: `@anvil.server.callable
+def predict_boston_price(rm, lstat, ptratio):
+    data = np.array([[rm, lstat, ptratio]])
+    data_scaled = scaler.transform(data)
+    prediction = model.predict(data_scaled)
+
+    return float(prediction[0][0] * 1000)`,
+        explanation:
+          "This function receives the values from the Anvil frontend, scales them first, and then sends them to the model for prediction. Adding scaler.transform helped make the frontend result more accurate.",
+      },
+    ],
+    screenshots: [
+      {
+        title: "Boston Housing Preview",
+        description:
+          "Preview image for the home and projects page card. This image is not shown inside the project detail page.",
+        image: "/projects/project-3/boston-preview.jpg",
+        previewOnly: true,
+      },
+      {
+        title: "Identifying Relevant Features",
+        description:
+          "Shows the correlation values used to identify RM, LSTAT, and PTRATIO as important features for predicting price.",
+        image: "/projects/project-3/identifying-relevant-features.png",
+      },
+      {
+        title: "Building and Training the Model",
+        description:
+          "Shows the simple neural network structure, model compilation, and training setup using 300 epochs.",
+        image: "/projects/project-3/building-training-model.png",
+      },
+      {
+        title: "Anvil Server Callable",
+        description:
+          "Shows the server callable function that receives Anvil input values, scales them, and returns the predicted price.",
+        image: "/projects/project-3/anvil-server-callable.png",
+      },
+      {
+        title: "Prediction Result - Higher Price",
+        description:
+          "Shows the Anvil Works frontend returning a predicted house price based on user input values.",
+        image: "/projects/project-3/prediction-high.png",
+      },
+      {
+        title: "Prediction Result - Lower Price",
+        description:
+          "Shows another test case where the frontend successfully displays a different predicted price.",
+        image: "/projects/project-3/prediction-low.png",
+      },
+      {
+        title: "Prediction Result - Mid Price",
+        description:
+          "Shows a third prediction test with different feature values entered into the frontend.",
+        image: "/projects/project-3/prediction-mid.png",
+      },
+    ],
+    tools: [
+      "Google Colab",
+      "Python",
+      "Pandas",
+      "NumPy",
+      "scikit-learn",
+      "TensorFlow",
+      "Keras",
+      "StandardScaler",
+      "Boston Housing Dataset",
+      "Anvil Works",
+      "Anvil Uplink",
+      "Neural Network",
+    ],
     challenges: [
       {
-        problem: "Keeping the project organized while adding more details.",
-        solution: "Group related information together and use a consistent naming style for files and sections.",
+        problem:
+          "I had a hard time configuring Anvil Works again and making sure the frontend inputs connected properly to the notebook function.",
+        solution:
+          "I double checked the variables, verified the Anvil input and output fields, and added scaler.transform inside the server callable function so the model could receive properly scaled values before predicting.",
+      },
+      {
+        problem:
+          "It was also challenging to know which dataset features should be used as inputs for model training.",
+        solution:
+          "I used the correlation values to identify the strongest features and focused on RM, LSTAT, and PTRATIO because they were more useful for predicting the target price.",
       },
     ],
     reflection:
-      "Replace this reflection with the specific lessons from Project 3, such as better debugging, clearer planning, or stronger visual presentation.",
+      "This project helped me improve my bug fixing process because I had to identify where the errors were coming from, especially when connecting Google Colab to Anvil Works. I learned that even if the model works in the notebook, the frontend can still give inaccurate results if the inputs are not prepared the same way as the training data. Adding scaler.transform in the callable function helped me understand why preprocessing is important. I also learned more about choosing features for model training and how selecting the right inputs can affect the quality of predictions.",
   },
   {
     slug: "project-4",

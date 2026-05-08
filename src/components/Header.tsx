@@ -14,10 +14,23 @@ export function Header() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
 
+  function playNavigationSound(href: string) {
+    if (href !== pathname) {
+      window.playDoryaSound?.();
+    }
+  }
+
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-[#05070C]/88 backdrop-blur-xl">
       <nav className="mx-auto flex h-20 w-full max-w-7xl items-center justify-between px-6 md:px-8" aria-label="Main">
-        <Link href="/" className="focus-ring rounded-2xl text-left" onClick={() => setIsOpen(false)}>
+        <Link
+          href="/"
+          className="focus-ring rounded-2xl text-left"
+          onClick={() => {
+            playNavigationSound("/");
+            setIsOpen(false);
+          }}
+        >
           <span className="block text-base font-black text-white">Fritzch Ainsley Santos</span>
           <span className="block text-xs font-black uppercase tracking-[0.18em] text-[#74C7FF]">PTF04 Portfolio</span>
         </Link>
@@ -29,6 +42,7 @@ export function Header() {
               <Link
                 key={item.href}
                 href={item.href}
+                onClick={() => playNavigationSound(item.href)}
                 className={`focus-ring rounded-full px-5 py-2.5 text-sm font-bold transition ${
                   isActive
                     ? "bg-[#E8334A] !text-white shadow-[0_10px_25px_rgba(232,51,74,0.28)]"
@@ -69,7 +83,10 @@ export function Header() {
                 <Link
                   key={item.href}
                   href={item.href}
-                  onClick={() => setIsOpen(false)}
+                  onClick={() => {
+                    playNavigationSound(item.href);
+                    setIsOpen(false);
+                  }}
                   className={`focus-ring rounded-2xl px-4 py-3 text-sm font-bold transition ${
                     isActive
                       ? "bg-[#E8334A] !text-white"

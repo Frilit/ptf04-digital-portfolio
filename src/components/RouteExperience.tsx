@@ -5,6 +5,12 @@ import { usePathname } from "next/navigation";
 
 type SplashState = "visible" | "leaving" | "hidden";
 
+declare global {
+  interface Window {
+    playDoryaSound?: () => void;
+  }
+}
+
 export function RouteExperience() {
   const pathname = usePathname();
   const audioRef = useRef<HTMLAudioElement>(null);
@@ -19,6 +25,7 @@ export function RouteExperience() {
       return;
     }
 
+    audio.pause();
     audio.currentTime = 0;
     audio.volume = 0.62;
     void audio.play().catch(() => {
@@ -37,16 +44,24 @@ export function RouteExperience() {
   }
 
   useEffect(() => {
-    if (previousPathRef.current !== pathname && soundEnabled && splashState === "hidden") {
-      playDorya();
-    }
+    window.playDoryaSound = () => {
+      if (soundEnabled && splashState === "hidden") {
+        playDorya();
+      }
+    };
 
+    return () => {
+      delete window.playDoryaSound;
+    };
+  }, [playDorya, soundEnabled, splashState]);
+
+  useEffect(() => {
     previousPathRef.current = pathname;
-  }, [pathname, playDorya, soundEnabled, splashState]);
+  }, [pathname]);
 
   return (
     <>
-      <audio ref={audioRef} src="/dorya.mp3" preload="auto" />
+      <audio ref={audioRef} src="/dorya.m4a" preload="auto" />
       {splashState !== "hidden" ? (
         <div
           className={`fixed inset-0 z-[100] grid place-items-center overflow-hidden bg-[#05070C] px-6 transition duration-500 ${

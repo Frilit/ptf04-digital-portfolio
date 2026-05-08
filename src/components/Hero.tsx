@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { SoundLink } from "./SoundLink";
 
 export function Hero() {
   return (
@@ -23,18 +23,18 @@ export function Hero() {
               growth, and the skills I developed along the way.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <Link
+              <SoundLink
                 href="/projects"
                 className="focus-ring tekken-button rounded-sm bg-[#E8334A] px-7 py-3.5 text-center text-sm font-black uppercase tracking-[0.12em] text-white shadow-[0_14px_32px_rgba(232,51,74,0.34)] transition hover:-translate-y-1 hover:bg-[#FF5267]"
               >
                 View My Projects
-              </Link>
-              <Link
+              </SoundLink>
+              <SoundLink
                 href="/about"
                 className="focus-ring rounded-sm border border-[#74C7FF]/55 bg-black/45 px-7 py-3.5 text-center text-sm font-black uppercase tracking-[0.12em] text-[#DDEBFF] transition hover:-translate-y-1 hover:border-white hover:bg-[#1C9BFF] hover:text-white"
               >
                 About Me
-              </Link>
+              </SoundLink>
             </div>
           </div>
           <div className="relative mx-auto w-full max-w-md">

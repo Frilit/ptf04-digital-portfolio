@@ -1,5 +1,5 @@
-import Link from "next/link";
 import type { Project } from "@/data/projects";
+import { SoundLink } from "./SoundLink";
 import { Tag } from "./Tag";
 
 type ProjectCardProps = {
@@ -39,12 +39,12 @@ export function ProjectCard({ project, compact = false }: ProjectCardProps) {
           ))}
         </div>
       ) : null}
-      <Link
+      <SoundLink
         href={`/projects/${project.slug}`}
         className="focus-ring tekken-button mt-6 inline-flex items-center justify-center rounded-sm bg-[#1C9BFF] px-5 py-3 text-sm font-black uppercase tracking-[0.1em] text-white transition group-hover:bg-[#E8334A]"
       >
         View Project
-      </Link>
+      </SoundLink>
     </article>
   );
 }

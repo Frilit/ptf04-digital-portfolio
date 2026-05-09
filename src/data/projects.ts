@@ -268,6 +268,7 @@ def predict_iris(sepal_length, sepal_width, petal_length, petal_width):
         description:
           "A flower preview image used to represent the Iris Classifier project on the portfolio card.",
         image: "/projects/project-2/iris-preview.png",
+        previewOnly: true,
       },
       {
         title: "KNN Model Training",
@@ -1008,6 +1009,7 @@ with open("model.tflite", "wb") as f:
         description:
           "Shows the dog and cat theme used for the project preview and classifier concept.",
         image: "/projects/project-7/dogs-cats-preview.jpg",
+        previewOnly: true,
       },
       {
         title: "CNN Model Training Code",

@@ -745,32 +745,175 @@ model = load_model("model.h5")
   {
     slug: "project-6",
     projectNumber: 6,
-    title: "Project 6: Editable Activity Title",
+    title: "CIFAR Model Training and Deployment",
     shortDescription:
-      "A flexible placeholder for a project that may involve interactivity, documentation, deployment, or user-focused design.",
+      "A CNN image classification project using the CIFAR-10 dataset, optimized through different layers and settings, then deployed through a Flask web app.",
     overview:
-      "Use this overview to describe the sixth PTF04 project. Mention the final output, its purpose, and how it connects to your learning journey.",
+      "In this project, we created a CNN model with different layers to predict classes from the famous CIFAR-10 dataset. We optimized the model by trying different parameters, learning rates, optimizers, and a dropout layer to improve the accuracy as much as possible. After the model was ready, we saved it and deployed it through a Flask web application so users could upload an image and receive a predicted CIFAR-10 class.",
     objectives: [
-      "Build a more complete and polished project output.",
-      "Practice testing and improving the result based on issues found.",
-      "Document the project in a way that future viewers can understand quickly.",
+      "Create a CNN model that can classify images from the CIFAR-10 dataset.",
+      "Test different layers, optimizers, learning rates, and dropout settings to improve accuracy.",
+      "Save the trained model so it can be used outside the notebook.",
+      "Build the needed Flask and HTML files for the web app deployment.",
+      "Allow users to upload an image and view the predicted class from the model.",
     ],
     features: [
-      "Reusable page template for consistent documentation.",
-      "Dedicated space for challenges and solutions.",
-      "Clean layout for code snippets and screenshot previews.",
+      "CIFAR-10 dataset with 10 image classes such as airplane, automobile, cat, ship, and truck.",
+      "CNN model using convolution, pooling, flatten, dense, and output layers.",
+      "Optimization experiments using different optimizers, learning rates, and dropout.",
+      "Saved model converted or loaded for deployment through TensorFlow Lite.",
+      "Flask web app that accepts image uploads and displays prediction results with confidence scores.",
     ],
-    codeSnippets: commonSnippets,
-    screenshots: placeholderScreenshots,
-    tools: ["Next.js", "TypeScript", "Tailwind CSS", "GitHub"],
+    codeSnippets: [
+      {
+        title: "CNN Model Structure",
+        language: "python",
+        code: `model = tf.keras.Sequential([
+    tf.keras.layers.Conv2D(32, (3, 3), activation="relu", padding="same"),
+    tf.keras.layers.Conv2D(32, (3, 3), activation="relu", padding="same"),
+    tf.keras.layers.MaxPooling2D((2, 2)),
+    tf.keras.layers.Conv2D(64, (3, 3), activation="relu", padding="same"),
+    tf.keras.layers.Conv2D(64, (3, 3), activation="relu", padding="same"),
+    tf.keras.layers.MaxPooling2D((2, 2)),
+    tf.keras.layers.Flatten(),
+    tf.keras.layers.Dense(128, activation="relu"),
+    tf.keras.layers.Dense(10, activation="softmax"),
+])`,
+        explanation:
+          "This is the main CNN structure used for CIFAR-10 classification. The convolution layers help detect image patterns, pooling reduces the feature size, and the dense layers finish the classification into 10 possible classes.",
+      },
+      {
+        title: "Optimizer, Learning Rate, and Training",
+        language: "python",
+        code: `optimizer = tf.keras.optimizers.Adam(learning_rate=0.0005)
+
+model.compile(
+    loss="sparse_categorical_crossentropy",
+    optimizer=optimizer,
+    metrics=["sparse_categorical_accuracy"],
+)
+
+model.fit(x_train, y_train, epochs=15)
+test_loss, test_accuracy = model.evaluate(x_test, y_test)`,
+        explanation:
+          "This part shows how the model was compiled and trained while testing a specific optimizer and learning rate. The evaluation step helped check if the changes actually improved the model instead of only increasing training accuracy.",
+      },
+      {
+        title: "Adding Dropout",
+        language: "python",
+        code: `model.add(tf.keras.layers.Dense(units=128, activation="relu"))
+model.add(tf.keras.layers.Dropout(0.3))
+model.add(tf.keras.layers.Dense(units=10, activation="softmax"))`,
+        explanation:
+          "This dropout layer was added to reduce overfitting. It randomly turns off some neurons during training, which can help the model learn more general patterns instead of memorizing the training images too much.",
+      },
+      {
+        title: "Flask Prediction Route",
+        language: "python",
+        code: `interpreter = tf.lite.Interpreter(model_path="CIFAR-10model.tflite")
+interpreter.allocate_tensors()
+
+@app.route("/predict", methods=["POST"])
+def predict():
+    file = request.files["file"]
+    image = Image.open(file).convert("RGB")
+    input_data = preprocess_image(image)
+
+    interpreter.set_tensor(input_details[0]["index"], input_data)
+    interpreter.invoke()
+
+    output = interpreter.get_tensor(output_details[0]["index"])
+    prediction = np.argmax(output)
+    return jsonify({"prediction": class_names[prediction]})`,
+        explanation:
+          "This is the Flask route that receives the uploaded image, preprocesses it, runs the TensorFlow Lite model, and returns the predicted CIFAR-10 class to the web app.",
+      },
+    ],
+    screenshots: [
+      {
+        title: "CIFAR-10 Dataset Preview",
+        description:
+          "Shows sample images from the 10 CIFAR-10 classes used for model training and testing.",
+        image: "/projects/project-6/cifar-preview.png",
+      },
+      {
+        title: "CNN Model Summary",
+        description:
+          "Displays the model layers, output shapes, and total parameters used in the CNN architecture.",
+        image: "/projects/project-6/model-summary.png",
+      },
+      {
+        title: "Optimizer and Learning Rate Testing",
+        description:
+          "Shows the model training process after trying an Adam optimizer with a selected learning rate, then evaluating the test accuracy.",
+        image: "/projects/project-6/optimizer-learning-rate.png",
+      },
+      {
+        title: "Dropout Optimization",
+        description:
+          "Shows the dropout layer added after the dense layer to help reduce overfitting during training.",
+        image: "/projects/project-6/dropout-optimization.png",
+      },
+      {
+        title: "Airplane Prediction Test",
+        description:
+          "Notebook output showing the trained model predicting an airplane image with high confidence.",
+        image: "/projects/project-6/predicted-airplane.png",
+      },
+      {
+        title: "Ship Prediction Test",
+        description:
+          "Notebook output showing the trained model predicting a ship image with high confidence.",
+        image: "/projects/project-6/predicted-ship.png",
+      },
+      {
+        title: "Cat Prediction Test",
+        description:
+          "Notebook output showing the trained model predicting a cat image with high confidence.",
+        image: "/projects/project-6/predicted-cat.png",
+      },
+      {
+        title: "Flask App Automobile Result",
+        description:
+          "Shows the Flask web app classifying an uploaded automobile image and displaying the top predictions.",
+        image: "/projects/project-6/flask-result-automobile.png",
+      },
+      {
+        title: "Flask App Cat Result",
+        description:
+          "Shows the Flask web app classifying an uploaded cat image with its confidence score and top prediction bars.",
+        image: "/projects/project-6/flask-result-cat.png",
+      },
+      {
+        title: "Flask App Airplane Result",
+        description:
+          "Shows the Flask web app classifying an uploaded airplane image and presenting the prediction in the frontend.",
+        image: "/projects/project-6/flask-result-airplane.png",
+      },
+    ],
+    tools: [
+      "Google Colab",
+      "Python",
+      "TensorFlow",
+      "Keras",
+      "TensorFlow Lite",
+      "CNN",
+      "CIFAR-10 Dataset",
+      "Flask",
+      "NumPy",
+      "Pillow",
+      "HTML",
+    ],
     challenges: [
       {
-        problem: "Making the project responsive or presentable on different screen sizes.",
-        solution: "Use flexible layouts, test on smaller screens, and simplify sections when space is limited.",
+        problem:
+          "I had a hard time understanding how the different CNN layers worked together, especially how convolution, pooling, dense layers, dropout, optimizers, and learning rates affected the model accuracy.",
+        solution:
+          "I studied the model layer by layer and compared the results from each optimization attempt. By checking the model summary, training accuracy, test accuracy, and prediction outputs, I was able to understand that each layer and parameter has a different role, and that accuracy improves through careful testing instead of random changes.",
       },
     ],
     reflection:
-      "Replace this with what Project 6 helped you understand about responsive design, testing, or presenting your work professionally.",
+      "This project helped me understand CNNs much better because I saw how each layer contributes to image classification. At first, convolution and pooling were confusing, but the model summary and prediction outputs helped me connect the code to what the model was actually doing. I also learned that optimizations such as dropout, learning rate changes, and different optimizers can affect the accuracy in different ways. Through the Flask deployment, I also practiced turning a trained model into something users can interact with, which made the project feel more complete than just running predictions inside a notebook.",
   },
   {
     slug: "project-7",

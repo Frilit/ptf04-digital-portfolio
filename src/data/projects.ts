@@ -918,32 +918,158 @@ def predict():
   {
     slug: "project-7",
     projectNumber: 7,
-    title: "Project 7: Editable Activity Title",
+    title: "Dogs vs Cats Model Training and Deployment",
     shortDescription:
-      "An editable advanced project entry for highlighting stronger technical decisions and more polished presentation.",
+      "A dog and cat image classifier that uses a pre-trained CNN with loaded weights, then deploys the saved model through a Flask pet classifier web app.",
     overview:
-      "Project 7 is prepared for one of the later activities in your compilation. Replace this text with the project goal, process, and final result.",
+      "In this project, we created a new Google Colab notebook with the goal of accurately classifying dogs and cats. We made use of a pre-trained Convolutional Neural Network model by defining its architecture and loading its weights from a saved file. The CNN architecture included feature extraction and classification layers, then we used Flask deployment to turn the saved model into a web application where users could upload pet images and receive a prediction.",
     objectives: [
-      "Show stronger technical independence and problem-solving.",
-      "Use clear organization for project files, outputs, and explanations.",
-      "Reflect on skills gained near the end of the course.",
+      "Use a pre-trained CNN model by loading saved model weights.",
+      "Understand how feature extraction and classification layers work for dog and cat images.",
+      "Test the model with sample dog and cat images inside Google Colab.",
+      "Convert or prepare the model for deployment use.",
+      "Deploy the classifier through a Flask web application.",
     ],
     features: [
-      "Detailed feature list for important functionality.",
-      "Code snippet areas with explanations instead of full code dumps.",
-      "Polished visual cards for screenshots and system previews.",
+      "Pre-trained CNN model with weights loaded from a saved model file.",
+      "Convolution, max pooling, dropout, batch normalization, dense, and sigmoid layers.",
+      "Binary classification output for dog or cat prediction.",
+      "Image preprocessing that resizes and normalizes uploaded images before prediction.",
+      "Flask pet classifier interface with image upload, prediction label, and confidence score.",
     ],
-    codeSnippets: commonSnippets,
-    screenshots: placeholderScreenshots,
-    tools: ["React", "TypeScript", "Tailwind CSS", "Vercel"],
+    codeSnippets: [
+      {
+        title: "CNN Architecture with Loaded Weights",
+        language: "python",
+        code: `model = Sequential()
+
+model.add(Conv2D(32, (3, 3), activation="relu", input_shape=(128, 128, 3)))
+model.add(BatchNormalization())
+model.add(MaxPooling2D(pool_size=(2, 2)))
+model.add(Dropout(0.25))
+
+model.add(Conv2D(64, (3, 3), activation="relu"))
+model.add(BatchNormalization())
+model.add(MaxPooling2D(pool_size=(2, 2)))
+model.add(Dropout(0.25))
+
+model.add(Flatten())
+model.add(Dense(512, activation="relu"))
+model.add(BatchNormalization())
+model.add(Dropout(0.5))
+model.add(Dense(1, activation="sigmoid"))
+
+model.compile(loss="binary_crossentropy", optimizer="rmsprop", metrics=["accuracy"])
+model.load_weights("model.h5")`,
+        explanation:
+          "This code defines the CNN architecture and loads the saved weights from the model file. The convolution and pooling layers extract image features, while the dense and sigmoid layers classify the image as either dog or cat.",
+      },
+      {
+        title: "Image Preprocessing for Prediction",
+        language: "python",
+        code: `def get_prediction(test_img):
+    test_img = test_img.resize((128, 128), resample=PIL.Image.BICUBIC)
+    test_arr = img_to_array(test_img)
+    test_arr = np.expand_dims(test_arr, axis=0)
+    test_arr /= 255.0
+    return float(model.predict(test_arr))`,
+        explanation:
+          "This function prepares an uploaded image before sending it to the model. It resizes the image, converts it into an array, adds the batch dimension, and normalizes the pixel values so the model can read it properly.",
+      },
+      {
+        title: "Dog or Cat Decision Logic",
+        language: "python",
+        code: `score = get_prediction(test_img)
+
+if score < 0.5:
+    print("It's a dog!")
+else:
+    print("It's a cat!")
+
+print(score)`,
+        explanation:
+          "This part uses the sigmoid score to decide the final label. Since the model performs binary classification, the threshold separates dog predictions from cat predictions.",
+      },
+      {
+        title: "Preparing the Model for Deployment",
+        language: "python",
+        code: `converter = tf.lite.TFLiteConverter.from_keras_model(model)
+tflite_model = converter.convert()
+
+with open("model.tflite", "wb") as f:
+    f.write(tflite_model)`,
+        explanation:
+          "This converts the Keras model into a TensorFlow Lite model file. It matters because deployment becomes lighter and easier to connect with a web app workflow.",
+      },
+    ],
+    screenshots: [
+      {
+        title: "Project Preview Image",
+        description:
+          "Shows the dog and cat theme used for the project preview and classifier concept.",
+        image: "/projects/project-7/dogs-cats-preview.jpg",
+      },
+      {
+        title: "CNN Model Training Code",
+        description:
+          "Shows the CNN architecture with batch normalization, dropout, sigmoid output, binary crossentropy, and loaded model weights.",
+        image: "/projects/project-7/model-training.png",
+      },
+      {
+        title: "Dog Prediction in Colab",
+        description:
+          "Shows the notebook testing a dog image and printing the predicted dog result with its score.",
+        image: "/projects/project-7/dog-prediction.png",
+      },
+      {
+        title: "Cat Prediction in Colab",
+        description:
+          "Shows the notebook testing a cat image and printing the predicted cat result with its score.",
+        image: "/projects/project-7/cat-prediction.png",
+      },
+      {
+        title: "Flask App Cat Result",
+        description:
+          "Shows the deployed Flask pet classifier predicting a cat image with confidence.",
+        image: "/projects/project-7/flask-cat-result.png",
+      },
+      {
+        title: "Flask App Dog Result",
+        description:
+          "Shows the deployed Flask pet classifier predicting a dog image with confidence.",
+        image: "/projects/project-7/flask-dog-result.png",
+      },
+      {
+        title: "Flask App Mixed Image Result",
+        description:
+          "Shows the Flask app handling another uploaded pet image and returning a prediction with confidence.",
+        image: "/projects/project-7/flask-mixed-result.png",
+      },
+    ],
+    tools: [
+      "Google Colab",
+      "Python",
+      "TensorFlow",
+      "Keras",
+      "TensorFlow Lite",
+      "CNN",
+      "Flask",
+      "NumPy",
+      "Pillow",
+      "Matplotlib",
+      "Pre-trained Model Weights",
+      "Dogs vs Cats Image Classification",
+    ],
     challenges: [
       {
-        problem: "Explaining technical work in a way that feels personal and professional.",
-        solution: "Write short explanations that focus on purpose, process, and what was learned.",
+        problem:
+          "The introduction of batch normalization and the sigmoid output layer confused me for a bit because I was still trying to understand how they affected the CNN model.",
+        solution:
+          "I reviewed the code carefully and used Gemini AI in Google Colab to understand how batch normalization helps stabilize training and how the sigmoid layer works for binary classification between dogs and cats.",
       },
     ],
     reflection:
-      "Replace this with your Project 7 reflection, including the technical skills and work habits you improved during the activity.",
+      "This project helped me understand that CNN models can be reused and improved instead of always starting from nothing. By loading pre-trained weights, I saw how an existing model can already contain useful learned patterns, then still be tested, optimized, and deployed for a specific task. I also learned more about batch normalization, dropout, and sigmoid classification, which made the dog and cat prediction process clearer. Most importantly, this activity showed me that using pre-trained models is a practical approach because we can build on them, adjust them, and deploy them for better-performing applications.",
   },
   {
     slug: "project-8",

@@ -1,3 +1,4 @@
+import { CharacterSwitcher } from "./CharacterSwitcher";
 import { SoundLink } from "./SoundLink";
 
 export function Hero() {
@@ -38,27 +39,19 @@ export function Hero() {
             </div>
           </div>
           <div className="relative mx-auto w-full max-w-md">
-            <div className="dragunov-ring relative mx-auto grid aspect-square w-full max-w-[360px] place-items-center rounded-full">
-              <div className="relative z-10 h-[88%] w-[88%] overflow-hidden rounded-full border border-white/10 bg-[#F6F7F9] shadow-[inset_0_0_36px_rgba(0,0,0,0.18)]">
-                <img
-                  src="/dragunov-profile.jpg"
-                  alt="Sergei Dragunov official TEKKEN 8 character render"
-                  className="h-full w-full object-cover object-center"
-                />
-              </div>
-            </div>
+            <CharacterSwitcher />
             <div className="mx-auto -mt-8 w-fit rounded-full border border-white/10 bg-black/70 px-5 py-3 text-center text-sm font-black uppercase tracking-[0.14em] text-white shadow-[0_14px_35px_rgba(0,0,0,0.4)] backdrop-blur">
               I&apos;m Tekken Emperor btw
             </div>
             <p className="mt-5 text-center text-[11px] font-bold uppercase tracking-[0.14em] text-white/45">
-              Dragunov image source: local portfolio asset.
+              Character images source: local portfolio assets.
             </p>
           </div>
         </div>
 
         <div className="relative z-10 mt-12 grid gap-4 md:grid-cols-3">
           {[
-            ["8", "Project pages"],
+            ["9", "Project pages"],
             ["PTF04", "Course journey"],
             ["2026", "Digital portfolio"],
           ].map(([value, label]) => (

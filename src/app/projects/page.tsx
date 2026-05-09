@@ -4,7 +4,7 @@ import { projects } from "@/data/projects";
 
 export const metadata = {
   title: "Projects",
-  description: "All eight PTF04 project pages in Fritzch Ainsley Santos' digital portfolio.",
+  description: "All nine PTF04 project pages in Fritzch Ainsley Santos' digital portfolio.",
 };
 
 export default function ProjectsPage() {
@@ -12,8 +12,8 @@ export default function ProjectsPage() {
     <section className="mx-auto w-full max-w-7xl px-6 py-14 md:px-8 md:py-20">
       <SectionTitle
         eyebrow="Projects"
-        title="Eight portfolio projects, ready for your real details."
-        description="Replace the placeholder data once your final project titles, screenshots, code snippets, and reflections are ready."
+        title="Nine portfolio projects from my PTF04 journey."
+        description="A collection of machine learning, deployment, mobile app, and AI-assisted projects that show my technical growth throughout the course."
       />
       <div className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
         {projects.map((project) => (

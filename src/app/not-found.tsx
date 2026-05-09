@@ -6,7 +6,7 @@ export default function NotFound() {
       <p className="mb-3 text-sm font-bold uppercase tracking-[0.2em] text-[#5BADEB]">Page not found</p>
       <h1 className="text-4xl font-black text-[#123047] md:text-5xl">This page is still floating somewhere else.</h1>
       <p className="mt-5 max-w-xl text-base leading-8 text-[#31536B]">
-        The portfolio page you opened does not exist yet. Head back to the project gallery and choose one of the eight
+        The portfolio page you opened does not exist yet. Head back to the project gallery and choose one of the nine
         available project pages.
       </p>
       <Link

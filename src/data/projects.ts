@@ -1217,6 +1217,115 @@ def predict_sentiment(input_text):
     reflection:
       "This project helped me understand how RNNs work with text data, which felt different from the image classification projects. I learned that text cannot be sent directly into the model, so tokenization and padding are very important steps for turning words into a format the RNN can understand. I also learned how the embedding and LSTM layers work together to find patterns in word sequences. Connecting the model to Anvil Works made the project more challenging, but it also helped me understand how preprocessing, prediction, and frontend output all need to match for the system to work properly.",
   },
+  {
+    slug: "project-9",
+    projectNumber: 9,
+    title: "MiT VAISON",
+    shortDescription:
+      "An MIT App Inventor mobile accessibility prototype that uses AI image description and text-to-speech to help visually impaired users understand their surroundings.",
+    overview:
+      "In this project, we were tasked to select an artificial intelligence tutorial within MIT App Inventor. My partner and I chose the genAIVisionAid_Starter tutorial, which is a computational action application and accessibility tool that helps visually impaired users understand their surroundings. We designed the frontend, connected the app to the OpenAI API, and created a working mobile application that can run through the MIT AI2 Companion App.",
+    objectives: [
+      "Follow the MIT App Inventor AI tutorial and understand how its blocks work together.",
+      "Create a working mobile application using the MIT App Inventor coding environment.",
+      "Use the camera component to capture an image from the mobile device.",
+      "Send the captured image to an AI model through the OpenAI API for description.",
+      "Improve the interface so the app is simple, readable, and helpful for users.",
+    ],
+    features: [
+      "MIT App Inventor mobile app built with visual block programming.",
+      "Camera capture feature for taking an image of the user's surroundings.",
+      "OpenAI-powered image description for accessibility support.",
+      "Text-to-speech output that reads the generated description aloud.",
+      "Clear button for resetting the image, text result, and speech output.",
+    ],
+    codeSnippets: [
+      {
+        title: "Capture Image Block",
+        language: "text",
+        code: `when CameraButton.Click
+  call Camera1.TakePicture
+
+when Camera1.AfterPicture(image)
+  set Image1.Picture to image
+  set Image1.RotationAngle to 90`,
+        explanation:
+          "This block flow lets the user take a picture and immediately display it inside the app. The rotation adjustment helps the captured image appear correctly in the interface.",
+      },
+      {
+        title: "Send Image for AI Description",
+        language: "text",
+        code: `when DescribeImageButton.Click
+  call Notifier1.ShowProgressDialog(
+    message: "Sending image for analysis",
+    title: "Please Wait"
+  )
+
+  call ChatBot1.ConverseWithImage(
+    question: "Describe the image in a brief way in detail for a visually impaired person",
+    source: Image1.Picture
+  )`,
+        explanation:
+          "This is the main AI interaction. The app shows a loading message, then sends the captured image and prompt to the chatbot component so it can generate a helpful description.",
+      },
+      {
+        title: "Display and Speak the Result",
+        language: "text",
+        code: `when ChatBot1.GotResponse(responseText)
+  call Notifier1.DismissProgressDialog
+  set TextBox1.Text to responseText
+  call TextToSpeech1.Speak(responseText)`,
+        explanation:
+          "After the AI returns a response, the app displays the description and reads it aloud. This is important because the project is meant to support visually impaired users.",
+      },
+      {
+        title: "Clear App Output",
+        language: "text",
+        code: `when ClearButton.Click
+  set Image1.Picture to ""
+  set TextBox1.Text to ""
+  call TextToSpeech1.Stop`,
+        explanation:
+          "This reset block clears the current image and description, then stops any active speech. It makes the app easier to reuse for another image.",
+      },
+    ],
+    screenshots: [
+      {
+        title: "VAISON Project Poster",
+        description:
+          "Shows the VAISON app concept, project overview, key features, workflow, tools, and potential accessibility impact.",
+        image: "/projects/project-9/vaison-preview.png",
+      },
+      {
+        title: "MIT App Inventor Blocks",
+        description:
+          "Shows the visual blocks used for taking a picture, sending it for AI analysis, speaking the response, and clearing the output.",
+        image: "/projects/project-9/mit-app-inventor-blocks.jpg",
+      },
+    ],
+    tools: [
+      "MIT App Inventor",
+      "MIT AI2 Companion App",
+      "OpenAI API",
+      "ChatBot Component",
+      "Camera Component",
+      "Text-to-Speech",
+      "Notifier Component",
+      "Mobile UI Design",
+      "Visual Block Programming",
+      "Accessibility",
+    ],
+    challenges: [
+      {
+        problem:
+          "While the activity was simple, I had a hard time creating a frontend that looked pleasing because MIT App Inventor has design limitations compared with normal web or mobile design tools.",
+        solution:
+          "I talked with my partner and we brainstormed ideas for making the frontend cleaner. We agreed to use a better color palette, adjust the placement of the boxes, and make the interface easier to understand while staying within MIT App Inventor's limits.",
+      },
+    ],
+    reflection:
+      "This project helped me understand how MIT App Inventor can be used to create mobile applications without writing traditional code. I learned that visual block programming can still be powerful, especially when combined with AI tools like the OpenAI API. The VAISON app also showed me how mobile applications can have real-life uses, especially for accessibility and helping people understand their surroundings more easily. It made me appreciate that a simple app idea can become meaningful when it solves a practical problem for users.",
+  },
 ];
 
 export function getProjectBySlug(slug: string) {

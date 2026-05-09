@@ -16,7 +16,7 @@ export function RouteExperience() {
   const doryaAudioRef = useRef<HTMLAudioElement>(null);
   const finalRoundAudioRef = useRef<HTMLAudioElement>(null);
   const finalRoundVideoRef = useRef<HTMLVideoElement>(null);
-  const finishTimeoutRef = useRef<ReturnType<typeof window.setTimeout> | null>(null);
+  const finishTimeoutRef = useRef<number | null>(null);
   const finishedRef = useRef(false);
   const previousPathRef = useRef(pathname);
   const [soundEnabled, setSoundEnabled] = useState(false);

@@ -34,6 +34,7 @@ export function CharacterSwitcher() {
   const activeCharacter = characters[activeIndex];
 
   function showNextCharacter() {
+    window.playDoryaSound?.();
     setActiveIndex((currentIndex) => (currentIndex + 1) % characters.length);
   }
 

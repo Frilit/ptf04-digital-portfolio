@@ -96,10 +96,6 @@ export function ProjectDetailTemplate({ project }: ProjectDetailTemplateProps) {
               <Tag key={`aside-${tool}`}>{tool}</Tag>
             ))}
           </div>
-          <p className="mt-5 text-sm leading-7 text-[#C7D8EA]">
-            Edit these tools in <span className="font-bold text-white">src/data/projects.ts</span> once the actual
-            project stack is ready.
-          </p>
         </aside>
       </div>
     </article>

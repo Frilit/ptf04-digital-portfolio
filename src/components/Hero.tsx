@@ -30,18 +30,18 @@ export function Hero() {
               >
                 View My Projects
               </SoundLink>
-              <SoundLink
-                href="/about"
-                className="focus-ring rounded-sm border border-[#74C7FF]/55 bg-black/45 px-7 py-3.5 text-center text-sm font-black uppercase tracking-[0.12em] text-[#DDEBFF] transition hover:-translate-y-1 hover:border-white hover:bg-[#1C9BFF] hover:text-white"
-              >
-                About Me
-              </SoundLink>
             </div>
           </div>
           <div className="relative mx-auto w-full max-w-md">
             <CharacterSwitcher />
-            <div className="mx-auto -mt-8 w-fit rounded-full border border-white/10 bg-black/70 px-5 py-3 text-center text-sm font-black uppercase tracking-[0.14em] text-white shadow-[0_14px_35px_rgba(0,0,0,0.4)] backdrop-blur">
-              I&apos;m Tekken Emperor btw
+            <div className="mx-auto -mt-8 flex w-fit items-center gap-2 rounded-full border border-white/10 bg-black/75 px-4 py-2.5 text-center text-xs font-black uppercase tracking-[0.14em] text-white shadow-[0_14px_35px_rgba(0,0,0,0.4)] backdrop-blur sm:text-sm">
+              <span>I&apos;m</span>
+              <img
+                src="/tekken-emperor-rank.png"
+                alt="Tekken Emperor rank"
+                className="h-10 w-auto drop-shadow-[0_0_14px_rgba(255,82,103,0.45)] sm:h-12"
+              />
+              <span>btw</span>
             </div>
           </div>
         </div>

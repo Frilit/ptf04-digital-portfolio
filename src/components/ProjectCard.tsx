@@ -24,8 +24,6 @@ export function ProjectCard({ project, compact = false }: ProjectCardProps) {
           alt={`${project.title} preview placeholder`}
           className="h-full w-full rounded-sm object-cover transition duration-500 group-hover:scale-110 group-hover:brightness-110"
         />
-        <span className="absolute inset-y-4 left-1/2 w-px -translate-x-1/2 bg-[#74C7FF] opacity-0 shadow-[0_0_20px_rgba(116,199,255,0.95)] transition duration-300 group-hover:opacity-100" />
-        <span className="absolute left-1/2 top-1/2 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#74C7FF] opacity-0 shadow-[0_0_24px_rgba(116,199,255,0.95)] transition duration-300 group-hover:opacity-100" />
         <span className="absolute right-4 top-4 translate-x-5 rounded-full border border-white/10 bg-black/70 px-3 py-1 text-[10px] font-black uppercase tracking-[0.16em] text-white opacity-0 transition duration-300 group-hover:translate-x-0 group-hover:opacity-100">
           Preview
         </span>

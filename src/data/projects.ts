@@ -667,32 +667,80 @@ def add_entry(entry_data):
   {
     slug: "project-5",
     projectNumber: 5,
-    title: "Project 5: Editable Activity Title",
+    title: "Boston House Price Prediction Streamlit Deployment",
     shortDescription:
-      "A project card prepared for a more advanced activity involving multiple features, files, or design decisions.",
+      "A Streamlit deployment of the Boston House Price Prediction model where users can enter housing features and receive a predicted price through a simple frontend.",
     overview:
-      "Project 5 can be used for an activity where the output became more detailed. Add your actual topic, purpose, and finished result here.",
+      "Since we already created a Google Colab notebook for the Boston House Price Prediction model, this project focused on saving the trained model and deploying it with Streamlit so users could access a frontend version of the prediction system. We created the needed Python and HTML files, connected them with the saved model, and configured the app so it could run on an available port.",
     objectives: [
-      "Strengthen the connection between design, code, and user experience.",
-      "Practice explaining technical choices in a simple and understandable way.",
-      "Show evidence of progress through visuals and selected code snippets.",
+      "Save the trained Boston House Price Prediction model for reuse outside the notebook.",
+      "Create the Python and HTML files needed for a Streamlit-based frontend.",
+      "Load the saved model into the Streamlit app so users can make predictions.",
+      "Configure Streamlit to run on an available port and display the prediction result properly.",
     ],
     features: [
-      "Multiple sections for technical and personal documentation.",
-      "Tool tags for quickly showing the technologies used.",
-      "Editable screenshots for before-and-after or input-and-output views.",
+      "Boston House dataset used as the base for the prediction model.",
+      "Saved Keras model file used for deployment.",
+      "Streamlit frontend with input fields for RM, LSTAT, and PTRATIO.",
+      "Python and HTML files organized so Streamlit can read the app correctly.",
+      "Prediction output displayed directly in the web interface.",
     ],
-    codeSnippets: commonSnippets,
-    screenshots: placeholderScreenshots,
-    tools: ["React", "Next.js", "Tailwind CSS", "TypeScript"],
+    codeSnippets: [
+      {
+        title: "Saving the Trained Model",
+        language: "python",
+        code: `# Save the trained Boston house price model
+model.save("model.h5")`,
+        explanation:
+          "This is the important step that allowed the trained model to be reused outside Google Colab. By saving it as model.h5, the Streamlit app could load the model later instead of training it again every time.",
+      },
+      {
+        title: "Loading the Model in Streamlit",
+        language: "python",
+        code: `from tensorflow.keras.models import load_model
+
+model = load_model("model.h5")
+
+# Streamlit inputs can then be passed into the model for prediction.`,
+        explanation:
+          "This shows the basic idea of connecting the saved model to the Streamlit app. The frontend collects the user inputs, then the loaded model is used to generate the predicted house price.",
+      },
+    ],
+    screenshots: [
+      {
+        title: "Streamlit Preview",
+        description:
+          "Preview image used for the project card. The actual project detail page focuses on the finished Streamlit interface.",
+        image: "/projects/project-5/streamlit-preview.jpg",
+        previewOnly: true,
+      },
+      {
+        title: "Streamlit App Output",
+        description:
+          "Shows the deployed Streamlit interface where users can enter housing values and view the predicted house price.",
+        image: "/projects/project-5/streamlit-screenshot.png",
+      },
+    ],
+    tools: [
+      "Google Colab",
+      "Python",
+      "TensorFlow",
+      "Keras",
+      "HDF5 / .h5 Model",
+      "Streamlit",
+      "HTML",
+      "Boston House Dataset",
+    ],
     challenges: [
       {
-        problem: "Balancing visual design with functionality.",
-        solution: "Prioritize readability first, then add small design details that support the content.",
+        problem:
+          "Configuring Streamlit to work properly took the longest time, especially placing the files in the correct hierarchy and making sure the app used an available port.",
+        solution:
+          "I checked the Streamlit instructions more carefully, moved the deployment to an available port, and asked for help with the proper file placement so Streamlit could read the Python, HTML, and saved model files correctly.",
       },
     ],
     reflection:
-      "Replace this reflection with your experience from Project 5, especially how your confidence changed compared with earlier projects.",
+      "This project helped me understand why saving a model is important when moving from a notebook to an actual deployed app. Instead of keeping the model only inside Google Colab, I learned how a saved model file can be loaded into another environment and used for predictions. I also gained more experience with Streamlit configuration, especially with file organization and port setup. This made me realize that deployment is not just about the model working, but also about making sure the files, paths, and app settings are arranged properly so users can actually access the system.",
   },
   {
     slug: "project-6",

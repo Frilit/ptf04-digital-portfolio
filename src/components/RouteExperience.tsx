@@ -13,13 +13,18 @@ declare global {
 
 export function RouteExperience() {
   const pathname = usePathname();
-  const audioRef = useRef<HTMLAudioElement>(null);
+  const doryaAudioRef = useRef<HTMLAudioElement>(null);
+  const finalRoundAudioRef = useRef<HTMLAudioElement>(null);
+  const finalRoundVideoRef = useRef<HTMLVideoElement>(null);
+  const finishTimeoutRef = useRef<ReturnType<typeof window.setTimeout> | null>(null);
+  const finishedRef = useRef(false);
   const previousPathRef = useRef(pathname);
   const [soundEnabled, setSoundEnabled] = useState(false);
   const [splashState, setSplashState] = useState<SplashState>("visible");
+  const [introPlaying, setIntroPlaying] = useState(false);
 
   const playDorya = useCallback(() => {
-    const audio = audioRef.current;
+    const audio = doryaAudioRef.current;
 
     if (!audio) {
       return;
@@ -33,14 +38,53 @@ export function RouteExperience() {
     });
   }, []);
 
-  function startExperience() {
-    setSoundEnabled(true);
-    playDorya();
+  const finishExperience = useCallback(() => {
+    if (finishedRef.current) {
+      return;
+    }
+
+    finishedRef.current = true;
+
+    if (finishTimeoutRef.current) {
+      window.clearTimeout(finishTimeoutRef.current);
+      finishTimeoutRef.current = null;
+    }
+
     setSplashState("leaving");
 
     window.setTimeout(() => {
+      setIntroPlaying(false);
       setSplashState("hidden");
     }, 720);
+  }, []);
+
+  function startExperience() {
+    if (introPlaying || splashState !== "visible") {
+      return;
+    }
+
+    const finalRoundAudio = finalRoundAudioRef.current;
+    const finalRoundVideo = finalRoundVideoRef.current;
+
+    finishedRef.current = false;
+    setSoundEnabled(true);
+    setIntroPlaying(true);
+
+    if (finalRoundVideo) {
+      finalRoundVideo.pause();
+      finalRoundVideo.currentTime = 0;
+      finalRoundVideo.muted = true;
+      void finalRoundVideo.play().catch(() => {});
+    }
+
+    if (finalRoundAudio) {
+      finalRoundAudio.pause();
+      finalRoundAudio.currentTime = 0;
+      finalRoundAudio.volume = 0.9;
+      void finalRoundAudio.play().catch(() => {});
+    }
+
+    finishTimeoutRef.current = window.setTimeout(finishExperience, 4300);
   }
 
   useEffect(() => {
@@ -59,9 +103,18 @@ export function RouteExperience() {
     previousPathRef.current = pathname;
   }, [pathname]);
 
+  useEffect(() => {
+    return () => {
+      if (finishTimeoutRef.current) {
+        window.clearTimeout(finishTimeoutRef.current);
+      }
+    };
+  }, []);
+
   return (
     <>
-      <audio ref={audioRef} src="/dorya.m4a" preload="auto" />
+      <audio ref={doryaAudioRef} src="/dorya.m4a" preload="auto" />
+      <audio ref={finalRoundAudioRef} src="/final-round-audio.mp4" preload="auto" onEnded={finishExperience} />
       {splashState !== "hidden" ? (
         <div
           className={`fixed inset-0 z-[100] grid place-items-center overflow-hidden bg-[#05070C] px-6 transition duration-500 ${
@@ -70,10 +123,22 @@ export function RouteExperience() {
         >
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_52%_42%,rgba(232,51,74,0.3),transparent_26%),radial-gradient(circle_at_42%_62%,rgba(28,155,255,0.32),transparent_28%),linear-gradient(135deg,rgba(255,255,255,0.04)_0_1px,transparent_1px_18px)]" />
           <div className="splash-slash absolute inset-y-0 left-1/2 w-24 -translate-x-1/2 bg-white/5" />
-          <div className="relative z-10 flex max-w-2xl flex-col items-center text-center">
-            <div className="splash-core relative grid h-36 w-36 place-items-center rounded-full bg-black/35 shadow-[0_0_80px_rgba(28,155,255,0.22)]">
-              <div className="relative z-10 h-20 w-20 rounded-full border border-white/10 bg-[#101723]/80 shadow-[inset_0_0_26px_rgba(116,199,255,0.12)]" />
-            </div>
+          <video
+            ref={finalRoundVideoRef}
+            src="/final-round-splash.webm"
+            preload="auto"
+            playsInline
+            muted
+            className={`pointer-events-none absolute left-1/2 top-1/2 z-20 w-[min(92vw,980px)] -translate-x-1/2 -translate-y-1/2 transition duration-300 ${
+              introPlaying ? "scale-100 opacity-100" : "scale-95 opacity-0"
+            }`}
+            aria-hidden="true"
+          />
+          <div
+            className={`relative z-10 flex max-w-2xl flex-col items-center text-center transition duration-300 ${
+              introPlaying ? "pointer-events-none scale-95 opacity-0" : "scale-100 opacity-100"
+            }`}
+          >
             <p className="splash-step splash-step-one mt-8 text-xs font-black uppercase tracking-[0.32em] text-[#74C7FF]">
               Portfolio loading
             </p>

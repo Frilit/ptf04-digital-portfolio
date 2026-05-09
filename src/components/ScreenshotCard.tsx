@@ -1,7 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import type { MouseEvent } from "react";
+import { useCallback, useEffect, useState } from "react";
 import type { Screenshot } from "@/data/projects";
 
 type ScreenshotCardProps = {
@@ -10,6 +11,16 @@ type ScreenshotCardProps = {
 
 export function ScreenshotCard({ screenshot }: ScreenshotCardProps) {
   const [isOpen, setIsOpen] = useState(false);
+
+  const closeLightbox = useCallback(() => {
+    setIsOpen(false);
+  }, []);
+
+  function closeFromBackdrop(event: MouseEvent<HTMLDivElement>) {
+    if (event.target === event.currentTarget) {
+      closeLightbox();
+    }
+  }
 
   useEffect(() => {
     if (!isOpen) {
@@ -20,7 +31,7 @@ export function ScreenshotCard({ screenshot }: ScreenshotCardProps) {
 
     function closeOnEscape(event: KeyboardEvent) {
       if (event.key === "Escape") {
-        setIsOpen(false);
+        closeLightbox();
       }
     }
 
@@ -31,7 +42,7 @@ export function ScreenshotCard({ screenshot }: ScreenshotCardProps) {
       document.body.style.overflow = originalOverflow;
       window.removeEventListener("keydown", closeOnEscape);
     };
-  }, [isOpen]);
+  }, [closeLightbox, isOpen]);
 
   return (
     <>
@@ -61,15 +72,21 @@ export function ScreenshotCard({ screenshot }: ScreenshotCardProps) {
 
       {isOpen ? (
         <div
-          className="fixed inset-0 z-[90] grid place-items-center bg-black/78 px-4 py-8 backdrop-blur-sm"
+          className="fixed inset-0 z-[90] grid place-items-center overflow-y-auto bg-black/82 px-4 py-6 backdrop-blur-sm"
           role="dialog"
           aria-modal="true"
           aria-label={screenshot.title}
-          onClick={() => setIsOpen(false)}
+          onMouseDown={closeFromBackdrop}
         >
+          <button
+            type="button"
+            onClick={closeLightbox}
+            className="focus-ring fixed right-4 top-4 z-[91] rounded-sm border border-white/15 bg-black/80 px-4 py-2 text-xs font-black uppercase tracking-[0.14em] text-white shadow-[0_12px_30px_rgba(0,0,0,0.45)] transition hover:border-[#74C7FF]/60 hover:bg-[#E8334A]"
+          >
+            Close
+          </button>
           <div
-            className="arcade-card max-h-[90vh] w-full max-w-5xl overflow-y-auto border border-[#74C7FF]/30 bg-[#070B12] p-4 shadow-[0_0_60px_rgba(28,155,255,0.28)] md:p-6"
-            onClick={(event) => event.stopPropagation()}
+            className="w-full max-w-[1120px] overflow-hidden rounded-sm border border-[#74C7FF]/30 bg-[#070B12] p-4 shadow-[0_0_60px_rgba(28,155,255,0.28)] md:p-6"
           >
             <div className="flex items-start justify-between gap-4">
               <div>
@@ -78,19 +95,17 @@ export function ScreenshotCard({ screenshot }: ScreenshotCardProps) {
               </div>
               <button
                 type="button"
-                onClick={() => setIsOpen(false)}
+                onClick={closeLightbox}
                 className="focus-ring rounded-sm border border-white/10 bg-black/45 px-4 py-2 text-xs font-black uppercase tracking-[0.14em] text-white transition hover:border-[#74C7FF]/60 hover:bg-[#1C9BFF]"
               >
                 Close
               </button>
             </div>
-            <div className="relative mt-5 h-[68vh] rounded-sm border border-white/10 bg-black/45 p-2">
-              <Image
+            <div className="mt-5 flex max-h-[68vh] min-h-[220px] items-center justify-center overflow-hidden rounded-sm border border-white/10 bg-black/45 p-2">
+              <img
                 src={screenshot.image}
                 alt={screenshot.title}
-                fill
-                className="object-contain p-2"
-                sizes="100vw"
+                className="max-h-[66vh] w-auto max-w-full rounded-sm object-contain"
               />
             </div>
             <p className="mt-5 text-base leading-8 text-[#C7D8EA]">{screenshot.description}</p>

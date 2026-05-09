@@ -1074,32 +1074,148 @@ with open("model.tflite", "wb") as f:
   {
     slug: "project-8",
     projectNumber: 8,
-    title: "Project 8: Editable Activity Title",
+    title: "Sentiment Analysis Deployed in Anvil",
     shortDescription:
-      "The final editable project entry, ideal for presenting a capstone-style output or final course requirement.",
+      "An RNN sentiment analysis project using the IMDB dataset, text tokenization, and an Anvil Works frontend for positive or negative prediction.",
     overview:
-      "Use this final project page to present the last PTF04 activity. Describe what makes it meaningful and how it shows your overall progress.",
+      "In this project, we created an RNN model that uses the IMDB dataset to make sentiment analysis predictions. The model was trained to understand text patterns and classify input as positive or negative. After building the RNN model, we deployed it through an Anvil Works frontend so users could type a sentence, submit it, and view the predicted sentiment.",
     objectives: [
-      "Bring together skills learned throughout PTF04.",
-      "Present a complete project with clear evidence of technical growth.",
-      "Reflect on the full learning journey from first project to final output.",
+      "Build an RNN model for sentiment analysis using the IMDB dataset.",
+      "Tokenize input text so words can be converted into model-readable sequences.",
+      "Pad text sequences to a consistent length for proper prediction.",
+      "Use an LSTM layer to learn patterns from text data.",
+      "Connect the trained model to an Anvil Works frontend through a callable function.",
     ],
     features: [
-      "Final project documentation with complete required sections.",
-      "Editable screenshots for UI, output, or system previews.",
-      "Reflection area for summarizing growth across the course.",
+      "IMDB dataset used for positive and negative review classification.",
+      "RNN model with an embedding layer, LSTM layer, and sigmoid output layer.",
+      "Text preprocessing using tokenization and sequence padding.",
+      "Anvil Works frontend where users can input custom text.",
+      "Prediction output that displays either Positive or Negative sentiment.",
     ],
-    codeSnippets: commonSnippets,
-    screenshots: placeholderScreenshots,
-    tools: ["Next.js", "TypeScript", "Tailwind CSS", "Vercel"],
+    codeSnippets: [
+      {
+        title: "IMDB Dataset Preprocessing",
+        language: "python",
+        code: `number_of_words = 20000
+max_len = 100
+
+(X_train, y_train), (X_test, y_test) = imdb.load_data(
+    num_words=number_of_words
+)
+
+X_train = tf.keras.preprocessing.sequence.pad_sequences(
+    X_train,
+    maxlen=max_len,
+)
+X_test = tf.keras.preprocessing.sequence.pad_sequences(
+    X_test,
+    maxlen=max_len,
+)`,
+        explanation:
+          "This prepares the IMDB dataset for the RNN model. The reviews are limited to the most common 20,000 words, then padded so every input has the same length before training and testing.",
+      },
+      {
+        title: "RNN Model with LSTM",
+        language: "python",
+        code: `vocab_size = number_of_words
+embed_size = 128
+
+model = tf.keras.Sequential()
+model.add(tf.keras.layers.Embedding(vocab_size, embed_size, input_shape=(X_train.shape[1],)))
+model.add(tf.keras.layers.LSTM(units=128, activation="tanh"))
+model.add(tf.keras.layers.Dense(units=1, activation="sigmoid"))
+
+model.compile(
+    optimizer="rmsprop",
+    loss="binary_crossentropy",
+    metrics=["accuracy"],
+)`,
+        explanation:
+          "This is the main RNN model. The embedding layer turns word indexes into vectors, the LSTM layer learns patterns from the word sequence, and the sigmoid output decides whether the sentiment is positive or negative.",
+      },
+      {
+        title: "Tokenizing Custom Input Text",
+        language: "python",
+        code: `word_to_index = imdb.get_word_index()
+input_sequence = [
+    word_to_index.get(word.lower(), 0) + 3
+    for word in input_text.split()
+]
+input_data = sequence.pad_sequences([input_sequence], maxlen=max_len)
+
+predicted_sentiment = model.predict(input_data)[0][0]
+sentiment_label = "Positive" if predicted_sentiment > 0.5 else "Negative"`,
+        explanation:
+          "This code converts the user's typed sentence into the same kind of numeric sequence used by the IMDB dataset. Padding the sequence is important because the RNN expects a fixed input length.",
+      },
+      {
+        title: "Anvil Callable Sentiment Function",
+        language: "python",
+        code: `import anvil.server
+
+anvil.server.connect("YOUR_ANVIL_UPLINK_KEY")
+
+@anvil.server.callable
+def predict_sentiment(input_text):
+    word_to_index = imdb.get_word_index()
+    input_sequence = [
+        word_to_index.get(word.lower(), 0) + 3
+        for word in input_text.split()
+    ]
+    input_data = sequence.pad_sequences([input_sequence], maxlen=max_len)
+    prediction = model.predict(input_data)[0][0]
+
+    return "Positive" if prediction > 0.5 else "Negative"`,
+        explanation:
+          "This connects the Google Colab model to Anvil Works. The frontend calls this function, sends the user text to Colab, and receives the sentiment label back for display.",
+      },
+    ],
+    screenshots: [
+      {
+        title: "Sentiment Analysis Preview",
+        description:
+          "Preview image used for the project card while the detail page focuses on the Anvil results.",
+        image: "/projects/project-8/sentiment-preview.png",
+        previewOnly: true,
+      },
+      {
+        title: "Positive Sentiment Result",
+        description:
+          "Shows the Anvil Works frontend predicting a positive sentiment from a friendly input sentence.",
+        image: "/projects/project-8/anvil-positive-result.png",
+      },
+      {
+        title: "Negative Sentiment Result",
+        description:
+          "Shows the Anvil Works frontend predicting a negative sentiment from a negative input sentence.",
+        image: "/projects/project-8/anvil-negative-result.png",
+      },
+    ],
+    tools: [
+      "Google Colab",
+      "Python",
+      "TensorFlow",
+      "Keras",
+      "IMDB Dataset",
+      "RNN",
+      "LSTM",
+      "Anvil Works",
+      "Anvil Uplink",
+      "NumPy",
+      "Text Tokenization",
+      "Sequence Padding",
+    ],
     challenges: [
       {
-        problem: "Turning the full project compilation into a clear portfolio experience.",
-        solution: "Use reusable components, consistent content sections, and a simple navigation structure.",
+        problem:
+          "The introduction of RNN confused me a bit because it was a different type of neural network model. Another difficult part was understanding how text had to be tokenized and padded so the RNN could accurately predict sentiment, then connecting that same preprocessing flow to Anvil Works.",
+        solution:
+          "I analyzed the major parts of the model training and model summary to understand how the layers interact with each other. For Anvil Works, I checked the coding side carefully so the frontend could call the functions from the Google Colab notebook, and I double checked the callable function to make sure it followed the same tokenization and preprocessing steps used by the model.",
       },
     ],
     reflection:
-      "Replace this with your final reflection for Project 8. Mention how this project represents your growth in PTF04 and what you want to keep improving.",
+      "This project helped me understand how RNNs work with text data, which felt different from the image classification projects. I learned that text cannot be sent directly into the model, so tokenization and padding are very important steps for turning words into a format the RNN can understand. I also learned how the embedding and LSTM layers work together to find patterns in word sequences. Connecting the model to Anvil Works made the project more challenging, but it also helped me understand how preprocessing, prediction, and frontend output all need to match for the system to work properly.",
   },
 ];
 

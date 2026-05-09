@@ -22,9 +22,9 @@ const characters = [
     imageClassName: "h-full w-full object-contain object-center",
   },
   {
-    name: "Negan",
-    image: "/negan-profile.png",
-    alt: "Negan character render",
+    name: "Steve Fox",
+    image: "/steve-profile.png",
+    alt: "Steve Fox character render",
     imageClassName: "h-full w-full object-contain object-center",
   },
 ];

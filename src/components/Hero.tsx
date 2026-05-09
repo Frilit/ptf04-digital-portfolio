@@ -43,9 +43,6 @@ export function Hero() {
             <div className="mx-auto -mt-8 w-fit rounded-full border border-white/10 bg-black/70 px-5 py-3 text-center text-sm font-black uppercase tracking-[0.14em] text-white shadow-[0_14px_35px_rgba(0,0,0,0.4)] backdrop-blur">
               I&apos;m Tekken Emperor btw
             </div>
-            <p className="mt-5 text-center text-[11px] font-bold uppercase tracking-[0.14em] text-white/45">
-              Character images source: local portfolio assets.
-            </p>
           </div>
         </div>
 
